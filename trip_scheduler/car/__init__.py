@@ -1,1 +1,0 @@
-from simple_car import SimpleCar
