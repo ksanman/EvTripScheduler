@@ -72,3 +72,6 @@ class Optimizer:
 
         self.Policy = policy
         return self.Policy
+
+    def GetSchedule(self, policy, environment):
+        pass

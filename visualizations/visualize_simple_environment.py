@@ -1,7 +1,7 @@
 from context import SimpleEnvironment, Trip
 from visualize import Visualize
 
-class EnvironmentVisualization:
+class SimpleEnvironmentVisualization:
     def run(self):
         
         trip = Trip(3, 3, 3, True)
@@ -11,5 +11,5 @@ class EnvironmentVisualization:
         visualize.VisualizeRewards(drivingRewards, chargingRewards)
 
 if __name__ == '__main__':
-    visual = EnvironmentVisualization()
+    visual = SimpleEnvironmentVisualization()
     visual.run()

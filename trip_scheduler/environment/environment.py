@@ -1,6 +1,6 @@
 import numpy as np
 from ..utility import RoundUp
-from ..transition import Transition
+from transition import Transition
 import abc, six
 
 @six.add_metaclass(abc.ABCMeta)
@@ -66,7 +66,7 @@ class Environment():
         pass
 
     @abc.abstractmethod
-    def ComputeChargingReward(self, timeBlock, batteryLevel, batteryDelta):
+    def ComputeChargingReward(self, timeBlock, batteryLevel, batteryDelta, chargingPrice):
         pass
 
     @abc.abstractmethod

@@ -1,1 +1,2 @@
 from simple_environment import SimpleEnvironment
+from trip_schedule_environment import EvTripScheduleEnvironment
