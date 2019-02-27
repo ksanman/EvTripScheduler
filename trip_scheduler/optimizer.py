@@ -4,13 +4,6 @@ import numpy as np
 class Optimizer:
     def __init__(self):
         pass
-    
-    def FindOptimalSchedule(self, trip):
-        environment = SimpleEnvironment(trip)
-
-        values = self.ComputeExpectedValue(environment)
-        policy = self.GetOptimalPolicy(values, environment)
-        #return GetOptimalSchedule()
 
     def ComputeExpectedValue(self, environment):
         NumberOfStops = environment.NumberOfStops
@@ -79,19 +72,3 @@ class Optimizer:
 
         self.Policy = policy
         return self.Policy
-        
-
-if __name__ == '__main__':
-    from trip import Trip
-    trip = Trip(10,10,5,False)
-    environment = SimpleEnvironment(trip)
-    agent = Optimizer()
-
-    values = agent.ComputeExpectedValue(environment)
-    policy = agent.GetOptimalPolicy(values, environment)
-
-    from visualize import Visualize
-    visualize = Visualize(environment.NumberOfStops, environment.MaxTripTime, environment.MaxBattery, environment.ExpectedTripTime)
-
-    visualize.VisualizeValueTable(values)
-    visualize.VisualizePolicy(policy)

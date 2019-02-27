@@ -1,26 +1,18 @@
 import numpy as np
-from transition import Transition
-from decimal import Decimal, ROUND_HALF_UP
-from visualize import Visualize
+from ..utility import RoundUp
+from ..transition import Transition
+import abc, six
 
-
-def RoundUp(value):
-    return int(Decimal(value).quantize(Decimal('0'), rounding=ROUND_HALF_UP))
-
-class SimpleEnvironment:
-    def __init__(self,trip):
-        """ Creates a new Simple Ev Trip Schedule environment. 
-
-            Keyword arguments:
-
-            trip -- An object that contains a possible trip schedule, the expected trip time, and the vehicle used on the trip.
-        """
-        
-        self.NumberOfStops = trip.NumberOfStops
-        self.ExpectedTripTime = trip.ExpectedTripTime
+@six.add_metaclass(abc.ABCMeta)
+class Environment():
+    """ Base class for an EV Trip Scheduling Environment.
+    """
+    def __init__(self, numberOfStops, expectedTripTime, maxBattery, hasDestinationCharger):
+        self.NumberOfStops = numberOfStops
+        self.ExpectedTripTime = expectedTripTime
         self.MaxTripTime = RoundUp(self.ExpectedTripTime * 1.25)
-        self.MaxBattery = trip.BatteryCapacity
-        self.HasFinalCharger = trip.HasDestinationCharger
+        self.MaxBattery = maxBattery
+        self.HasFinalCharger = hasDestinationCharger
         self.ActionSpace = np.array([[[[0] if stop == 0 \
             else [] if stop == self.NumberOfStops - 1 \
             else [0,1] \
@@ -32,8 +24,8 @@ class SimpleEnvironment:
             for _ in range(self.MaxBattery)] \
                 for _ in range(self.MaxTripTime)] \
                     for _ in range(self.NumberOfStops)])
+
         self.PopulateTransitions()
-        self.Visualizer = Visualize(self.NumberOfStops, self.MaxTripTime, self.MaxBattery, self.ExpectedTripTime)
         
     def PopulateTransitions(self):
         """ Populates the transition table for the given environment. 
@@ -60,46 +52,28 @@ class SimpleEnvironment:
                     else False
 
         return Transition(1.0, [nextStopIndex, nextTime, nextBattery], reward, isDone)
-    
+
+    @abc.abstractmethod
     def Drive(self, currentStopIndex, currentTime, currentBatteryLevel):
-        """ Computes the reward and next state for the driving action. 
-        """
-        nextStopIndex = min(currentStopIndex + 1,  self.NumberOfStops - 1)
-        nextTime = min(currentTime + 1, self.MaxTripTime - 1)
-        nextBattery = max(currentBatteryLevel - 1, 0)
-        reward = self.ComputeDrivingReward(nextStopIndex, nextTime, nextBattery)
+        pass
 
-        return (nextStopIndex, nextTime, nextBattery, reward)
-
+    @abc.abstractmethod
     def Charge(self, currentStopIndex, currentTime, currentBatteryLevel):
-        """ Computes the reward and next state for the charging action. 
-        """
-        nextStopIndex = currentStopIndex
-        nextTime = min(currentTime + 1,  self.MaxTripTime - 1)
-        nextBattery = min(currentBatteryLevel +  1,  self.MaxBattery - 1)
-        reward = self.ComputeChargingReward(nextTime, nextBattery, nextBattery-currentBatteryLevel)
+        pass
 
-        return (nextStopIndex, nextTime, nextBattery, reward)
-
+    @abc.abstractmethod
     def ComputeDrivingReward(self, stop, timeBlock, batteryLevel):
-        reward = self.ComputeTimeReward(timeBlock)
-        if stop ==  self.NumberOfStops - 1:
-            if not self.HasFinalCharger:
-                reward += 0 if batteryLevel >  self.MaxBattery * 0.50 else -1
-        else:
-            reward += 0 if batteryLevel >  self.MaxBattery * 0.20 else -1
+        pass
 
-        return reward
-
+    @abc.abstractmethod
     def ComputeChargingReward(self, timeBlock, batteryLevel, batteryDelta):
-        timeReward = self.ComputeTimeReward(timeBlock)
-        chargingReward = -((0.13*(batteryDelta)) + 0 + 0) if batteryLevel < self.MaxBattery * .90 else -1
-        return timeReward + chargingReward
+        pass
 
+    @abc.abstractmethod
     def ComputeTimeReward(self, time):
-        return self.ExpectedTripTime - time if time > self.ExpectedTripTime else 0
+        pass
 
-    def ShowRewards(self):
+    def GetRewards(self):
         drivingRewards = np.zeros((self.NumberOfStops, self.MaxTripTime, self.MaxBattery))
         chargingRewards = np.zeros((self.NumberOfStops, self.MaxTripTime, self.MaxBattery))
         for stop in range(self.NumberOfStops):
@@ -110,12 +84,4 @@ class SimpleEnvironment:
                     drivingRewards[stop, time, battery] = drivingTransition.Reward if drivingTransition else 0.0
                     chargingRewards[stop, time, battery] = chargingTransition.Reward if chargingTransition else 0.0
 
-        self.Visualizer.VisualizeRewards(drivingRewards, chargingRewards)
-        
-
-if __name__ == '__main__':
-    from trip import Trip
-
-    trip = Trip(10, 10, 5, True)
-    environment = SimpleEnvironment(trip)
-    environment.ShowRewards()
+        return drivingRewards, chargingRewards
