@@ -67,12 +67,7 @@ class SimpleEnvironment:
         nextStopIndex = min(currentStopIndex + 1,  self.NumberOfStops - 1)
         nextTime = min(currentTime + 1, self.MaxTripTime - 1)
         nextBattery = max(currentBatteryLevel - 1, 0)
-        reward = 1 if (self.ExpectedTripTime > nextTime) else -1
-        if nextStopIndex ==  self.NumberOfStops - 1:
-            if not self.HasFinalCharger:
-                reward += 0 if currentBatteryLevel >  self.MaxBattery * 0.50 else -1
-        else:
-            reward += 0 if currentBatteryLevel >  self.MaxBattery * 0.20 else -1
+        reward = self.ComputeDrivingReward(nextStopIndex, nextTime, nextBattery)
 
         return (nextStopIndex, nextTime, nextBattery, reward)
 
@@ -82,11 +77,27 @@ class SimpleEnvironment:
         nextStopIndex = currentStopIndex
         nextTime = min(currentTime + 1,  self.MaxTripTime - 1)
         nextBattery = min(currentBatteryLevel +  1,  self.MaxBattery - 1)
-        reward = (self.ExpectedTripTime - nextTime) \
-             + (-((0.13*nextBattery - currentBatteryLevel) \
-                 + 0 + 0) if nextBattery < self.MaxBattery * .90 else -1)
+        reward = self.ComputeChargingReward(nextTime, nextBattery, nextBattery-currentBatteryLevel)
 
         return (nextStopIndex, nextTime, nextBattery, reward)
+
+    def ComputeDrivingReward(self, stop, timeBlock, batteryLevel):
+        reward = self.ComputeTimeReward(timeBlock)
+        if stop ==  self.NumberOfStops - 1:
+            if not self.HasFinalCharger:
+                reward += 0 if batteryLevel >  self.MaxBattery * 0.50 else -1
+        else:
+            reward += 0 if batteryLevel >  self.MaxBattery * 0.20 else -1
+
+        return reward
+
+    def ComputeChargingReward(self, timeBlock, batteryLevel, batteryDelta):
+        timeReward = self.ComputeTimeReward(timeBlock)
+        chargingReward = -((0.13*(batteryDelta)) + 0 + 0) if batteryLevel < self.MaxBattery * .90 else -1
+        return timeReward + chargingReward
+
+    def ComputeTimeReward(self, time):
+        return self.ExpectedTripTime - time if time > self.ExpectedTripTime else 0
 
     def ShowRewards(self):
         drivingRewards = np.zeros((self.NumberOfStops, self.MaxTripTime, self.MaxBattery))
@@ -96,8 +107,8 @@ class SimpleEnvironment:
                 for battery in range(self.MaxBattery):
                     drivingTransition =  self.Transitions[stop, time, battery, 0]
                     chargingTransition = self.Transitions[stop, time, battery, 1]
-                    drivingRewards[stop, time, battery] = drivingTransition.Reward if drivingTransition else 0
-                    chargingRewards[stop, time, battery] = drivingTransition.Reward if chargingTransition else 0
+                    drivingRewards[stop, time, battery] = drivingTransition.Reward if drivingTransition else 0.0
+                    chargingRewards[stop, time, battery] = chargingTransition.Reward if chargingTransition else 0.0
 
         self.Visualizer.VisualizeRewards(drivingRewards, chargingRewards)
         

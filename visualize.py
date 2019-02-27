@@ -11,7 +11,7 @@ class Visualize:
         self.ExpectedTripTime = expectedTripTime
 
     def VisualizeRewards(self, drivingRewards, chargingRewards):
-        fig, axes = plt.subplots(self.NumberOfStops , 2)
+        fig, axes = plt.subplots(self.NumberOfStops , 2, figsize=(10,10))
 
         minVal = min(drivingRewards.min(), chargingRewards.min())
         maxVal = max(drivingRewards.max() + 1, chargingRewards.max() + 1)
@@ -77,7 +77,7 @@ class Visualize:
         return mcolors.LinearSegmentedColormap(cmap.name + "_%d"%N, cdict, 1024)
         
     def VisualizeValueTable(self, values):
-        fig, axes = plt.subplots(self.NumberOfStops)
+        fig, axes = plt.subplots(self.NumberOfStops, figsize=(10,10))
 
         minVal = values.min()
         maxVal = values.max()
@@ -112,7 +112,7 @@ class Visualize:
         plt.show()
 
     def VisualizePolicy(self, policy):
-        fig, axes = plt.subplots(self.NumberOfStops)
+        fig, axes = plt.subplots(self.NumberOfStops, figsize=(10,10))
 
         minVal = 0
         maxVal = 1

@@ -44,7 +44,7 @@ class Optimizer:
 
                         values[stop, time, batteryLevel] = np.max(expectedValues)
 
-            delta = np.sum(np.fabs(valuesCopy.flatten() - values.flatten()))
+            delta = np.sum(np.fabs(valuesCopy - values))
 
             if(delta <= 0.1):
                 break
@@ -61,8 +61,8 @@ class Optimizer:
         Values = values
         policy = np.zeros((NumberOfStops, MaxTripTime, MaxBattery))
 
-        for stop in range(NumberOfStops):
-            for time in range(MaxTripTime):
+        for stop in range(NumberOfStops - 1, -1, -1):
+            for time in range(MaxTripTime - 1, -1, -1):
                 for batteryLevel in range(MaxBattery):
                     actionSpace = ActionSpace[stop, time, batteryLevel]
                     expectedValues = []
