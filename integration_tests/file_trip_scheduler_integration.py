@@ -19,7 +19,7 @@ trip = tripBuilder.BuildTrip(expectedTime, batteryCapacity, vehicle)
 
 endTripTime = time()
 
-print 'Trip built in {0} seconds'.format(endTripTime - startTripTime)
+print '\nTrip built in {0} seconds \n'.format(endTripTime - startTripTime)
 
 # Get the optimial schedule
 
@@ -32,7 +32,7 @@ environment = EvTripScheduleEnvironment(trip)
 
 endEnvTime = time()
 
-print 'Environment constructed in {0} seconds'.format(endEnvTime - startEnvTime)
+print 'Environment constructed in {0} seconds \n'.format(endEnvTime - startEnvTime)
 
 # Optimize the Schedule.  
 
@@ -46,36 +46,36 @@ expectedValues = optimizer.ComputeExpectedValue(environment)
 
 endExpectedValueTime = time()
 
-print 'Expected value found in {0} seconds'.format(endExpectedValueTime - startExpectedValueTime)
+print 'Expected value found in {0} seconds \n'.format(endExpectedValueTime - startExpectedValueTime)
 
 # Policy
 startPolicyTime = time()
 policy = optimizer.GetOptimalPolicy(expectedValues, environment)
 endPolicyTime = time()
 
-print 'Optimal Policy found in {0} seconds'.format(endPolicyTime - startPolicyTime)
+print 'Optimal Policy found in {0} seconds \n'.format(endPolicyTime - startPolicyTime)
 
 # Solve
 startScheduleTime = time()
 schedule = optimizer.GetSchedule(policy, trip.Route, environment)
 endScheduleTime = time()
 
-print 'Schedule found in {0} seconds'.format(endScheduleTime - startScheduleTime)
+print 'Schedule found in {0} seconds \n'.format(endScheduleTime - startScheduleTime)
 
 endOptimalScheduleTime = time()
 
-print 'Optimization done in {0} seconds'.format(endOptimalScheduleTime - startOptimalScheduleTime)
+print 'Optimization done in {0} seconds \n'.format(endOptimalScheduleTime - startOptimalScheduleTime)
 
 totalEndTime = time() 
 
-print 'Optimal trip found in {0} seconds'.format(totalStartTime - totalEndTime)
+print 'Optimal trip found in {0} seconds \n'.format(totalEndTime - totalStartTime)
 
 schedule.Print()
 
 # Add Visualizations here. 
-visualizer = Visualize(environment.NumberOfStops, environment.MaxTripTime, environment.MaxBattery, environment.ExpectedTripTime)
-visualizer.VisualizeRewards(*environment.GetRewards())
+#visualizer = Visualize(environment.NumberOfStops, environment.MaxTripTime, environment.MaxBattery, environment.ExpectedTripTime)
+#visualizer.VisualizeRewards(*environment.GetRewards())
 #visualizer.VisualizeValueTable(expectedValues)
 #visualizer.VisualizePolicy(policy)
-visualizer.DisplayEvaluationGraphs(schedule.TripStats, trip.Route.PossibleStops)
+#visualizer.DisplayEvaluationGraphs(schedule.TripStats, trip.Route.PossibleStops)
 print 'Done'
