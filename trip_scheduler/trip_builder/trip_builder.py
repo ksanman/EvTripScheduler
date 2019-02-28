@@ -1,5 +1,6 @@
 from trip import Trip
 from vehicle import SimpleVehicle, NissanLeaf
+from ..utility import RoundUp
 
 class TripBuilder:
     def BuildTrip(self, expectedTripTime, batteryCapacity, vehicle):
@@ -25,3 +26,7 @@ class TripBuilder:
 
     def GetRoute(self):
         return None
+
+    def ConvertFromSecondsToFifteenMinuteBlock(self, seconds):
+        minutes = seconds / 60
+        return RoundUp(minutes / 15)

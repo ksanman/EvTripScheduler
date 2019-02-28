@@ -247,12 +247,7 @@ class Visualize:
         plt.yticks(np.arange(0, max(milage) + 1, yTickSpacing))
         labels = axes.get_xticklabels()
         plt.setp(labels, horizontalalignment='right')
-        axes.set(xlabel='Distance', ylabel='Time', title=routeName + ': Distance vs Time')
-
-        labels = axes.get_xticklabels()
-
-        plt.setp(labels, horizontalalignment='right')
-        axes.set(xlabel='Distance', ylabel='Time', title=routeName + ': Distance vs Time')
+        axes.set(xlabel='Time', ylabel='Distance', title=routeName + ': Distance vs Time')
 
         
         #if routeName == "":

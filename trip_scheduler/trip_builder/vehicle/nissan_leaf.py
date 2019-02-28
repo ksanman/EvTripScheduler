@@ -14,7 +14,7 @@ class NissanLeaf(Vehicle):
             Returns the energy expended for driving the given road segment
         """
 
-        return roadSegment.Distance * self.KhwPerKm
+        return roadSegment.Distance / self.KhwPerKm
 
     def Charge(self, currentBatteryLevel, chargingConnection=None):
         """

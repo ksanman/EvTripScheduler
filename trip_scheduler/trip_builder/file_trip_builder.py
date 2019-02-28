@@ -37,7 +37,7 @@ class FileTripBuilder(TripBuilder, object):
                 chargerConnection = ChargerConnection(charger.UsageCost, charger.Connections[0].PowerKw, charger.Connections[0].Amps, charger.Connections[0].Voltage)
                 distanceFromPrevious, durationFromPrevious = self.Osrm.GetDistanceAndDurationBetweenPoints(route[stop].Location, chargerLocation)
                 energyExpended = RoundUp(self.Vehicle.Drive(RoadSegment(distanceFromPrevious, durationFromPrevious, 0)))
-                route.append(Stop(stop, charger.AddressInfo.Title,energyExpended, distanceFromPrevious, RoundUp(durationFromPrevious), chargerConnection, chargerLocation))
+                route.append(Stop(stop, str(charger.AddressInfo.Title) ,energyExpended, distanceFromPrevious, self.ConvertFromSecondsToFifteenMinuteBlock(durationFromPrevious), chargerConnection, chargerLocation))
 
         else:
             for stop in range(len(self.Chargers)-1):
@@ -46,12 +46,12 @@ class FileTripBuilder(TripBuilder, object):
                 chargerConnection = ChargerConnection(charger.UsageCost, charger.Connections[0].PowerKw, charger.Connections[0].Amps, charger.Connections[0].Voltage)
                 distanceFromPrevious, durationFromPrevious = self.Osrm.GetDistanceAndDurationBetweenPoints(route[stop].Location, chargerLocation)
                 energyExpended = RoundUp(self.Vehicle.Drive(RoadSegment(distanceFromPrevious, durationFromPrevious, 0)))
-                route.append(Stop(stop, charger.AddressInfo.Title,energyExpended, distanceFromPrevious,  RoundUp(durationFromPrevious), chargerConnection, chargerLocation))
+                route.append(Stop(stop, str(charger.AddressInfo.Title),energyExpended, distanceFromPrevious,  self.ConvertFromSecondsToFifteenMinuteBlock(durationFromPrevious), chargerConnection, chargerLocation))
 
             destinationLocation =osrmRoute['Coordinates'][-1]
             destinationCoordinate = Coordinate(destinationLocation[0], destinationLocation[1])
             distanceFromPrevious, durationFromPrevious = self.Osrm.GetDistanceAndDurationBetweenPoints(route[-1].Location, destinationCoordinate)
             energyExpended = self.Vehicle.Drive(RoadSegment(distanceFromPrevious, durationFromPrevious, 0))
-            route.append(Stop(self.NumberOfStops-1, "Destination", energyExpended, destinationCoordinate,  RoundUp(durationFromPrevious), location=destinationCoordinate))
+            route.append(Stop(self.NumberOfStops-1, "Destination", energyExpended, destinationCoordinate,  self.ConvertFromSecondsToFifteenMinuteBlock(durationFromPrevious), location=destinationCoordinate))
 
         return Route(route, osrmRoute['Polyline'], osrmRoute['Coordinates'])

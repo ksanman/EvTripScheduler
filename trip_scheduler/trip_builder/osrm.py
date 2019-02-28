@@ -72,7 +72,3 @@ class Osrm:
         distance = float(route["distance"]) / 1000
         duration = float(route['duration'])
         return distance, duration
-
-    def ConvertFromSecondsToFifteenMinuteBlock(self, seconds):
-        minutes = seconds / 60
-        return RoundUp(minutes / 15)
