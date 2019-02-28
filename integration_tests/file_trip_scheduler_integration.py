@@ -1,16 +1,17 @@
-from context import SimpleTripBuilder, Optimizer, SimpleEnvironment, Optimizer, Visualize
+from context import FileTripBuilder, Optimizer, EvTripScheduleEnvironment, NissanLeaf, Optimizer, Visualize
 
-numberOfStops = 10
-expectedTime = 12
-batteryCapacity = 8
+routeFilePath = "data/stgeorge_route.txt"
+chargersFilePath = "data/stgeorge_chargers.txt"
+expectedTime = 28
+batteryCapacity = 40
 hasCharge = True
-vehicle = 'SimpleVehicle'
+vehicle = 'NissanLeaf'
 
-tripBuilder = SimpleTripBuilder(numberOfStops, hasCharge)
+tripBuilder = FileTripBuilder(routeFilePath, chargersFilePath, hasCharge)
 
 trip = tripBuilder.BuildTrip(expectedTime, batteryCapacity, vehicle)
 
-environment = SimpleEnvironment(trip)
+environment = EvTripScheduleEnvironment(trip)
 
 optimizer = Optimizer()
 

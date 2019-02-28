@@ -82,11 +82,8 @@ class Optimizer:
         return self.Policy
 
     def GetSchedule(self, policy, route, environment):
-
         totalReward = 0.0
         chargingStations = []
-
-        #TODO Capture trip stats
         tripStats = []
         tripTime = 0
         state = environment.Reset()
@@ -104,20 +101,18 @@ class Optimizer:
                 if self.IsStopInList(nextState.StopIndex, chargingStations):
                     chargingStations[self.GetStopIndex(nextState.StopIndex, chargingStations)].TimeAtStop += 1
                 else:
-                    chargingStations.append(ScheduleStop(nextState.StopIndex, route.PossibleStops[nextState.StopIndex].Name, 1))
+                    chargingStations.append(ScheduleStop(nextState.StopIndex, route.PossibleStops[nextState.StopIndex].Name, 1, route.PossibleStops[nextState.StopIndex].Location))
             
             state = nextState
             tripStats.append(Stat(state, actionToTake))
 
             if isDone:
-                break
-            
-           
+                break       
 
         if nextState.StopIndex == environment.NumberOfStops - 1:
-            return Schedule(route.Polyline, chargingStations, route.PossibleStops[nextState.StopIndex], tripTime, nextState.BatteryLevel, True, tripStats)
+            return Schedule(route.Coordinates, chargingStations, route.PossibleStops[nextState.StopIndex], tripTime, nextState.BatteryLevel, True, tripStats)
         else:
-            return Schedule(route.Polyline, chargingStations, route.PossibleStops[nextState.StopIndex], tripTime, nextState.BatteryLevel, False, tripStats)
+            return Schedule(route.Coordinates, chargingStations, route.PossibleStops[nextState.StopIndex], tripTime, nextState.BatteryLevel, False, tripStats)
 
     def GetStopIndex(self, currentStop, chargingStations):
         for index, stop in enumerate(chargingStations):

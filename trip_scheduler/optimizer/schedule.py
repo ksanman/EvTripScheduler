@@ -1,6 +1,9 @@
+import folium
+import os 
+
 class Schedule:
-    def __init__(self, routePolyline, chargingStops, finalStop, tripTime, finalBatteryLevel, isSuccesful, tripStats):
-        self.Polyline = routePolyline
+    def __init__(self, coordinates, chargingStops, finalStop, tripTime, finalBatteryLevel, isSuccesful, tripStats):
+        self.Coordinates = coordinates
         self.ChargingStops = chargingStops
         self.TripTime = tripTime
         self.FinalBatteryLevel = finalBatteryLevel
@@ -25,5 +28,27 @@ class Schedule:
 
         self.DrawMap()
 
-    def DrawMap(self):
-        pass
+    def DrawMap(self): 
+        """
+            Draw a route on an OSM map and display the charging points on top of it. 
+        """   
+        
+        if self.Coordinates != []:
+            # Create the map and add the line
+            print('Drawing route')
+            m = folium.Map(location=[41.9, -97.3], zoom_start=4)
+            polyline = folium.PolyLine(locations=self.Coordinates, weight=5)
+            m.add_child(polyline)
+
+            for stop in self.ChargingStops:
+                folium.Marker(location=[stop.Location.Latitude, stop.Location.Longitude], popup=stop.Name + '\n Stop for {0} mintues'.format(stop.TimeAtStop)).add_to(m)
+
+
+            if not os.path.exists("temp"):
+                os.mkdir('temp/')
+
+            filepath = 'temp/map.html'
+            m.save(filepath)
+            #webbrowser.open(filepath)
+
+            print 'Saved route to {0}'.format(filepath)

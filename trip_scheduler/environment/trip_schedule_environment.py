@@ -1,5 +1,6 @@
 from environment import Environment
 from state import State
+from ..utility import RoundUp
 
 class EvTripScheduleEnvironment(Environment):
     def __init__(self,trip):
@@ -34,7 +35,7 @@ class EvTripScheduleEnvironment(Environment):
         """
         charger = self.Route[currentStopIndex].ChargerConnection
         nextTime = min(currentTime + 1,  self.MaxTripTime - 1)
-        deltaBattery =  self.Vehicle.Charge(currentBatteryLevel, charger)
+        deltaBattery =  RoundUp(self.Vehicle.Charge(currentBatteryLevel, charger))
         nextBattery = min(currentBatteryLevel + deltaBattery, self.MaxBattery - 1)
         reward = self.ComputeChargingReward(nextTime, nextBattery, deltaBattery, charger.Price)
 
