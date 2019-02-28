@@ -23,7 +23,7 @@ class NissanLeaf(Vehicle):
         """
         currentIndex = self.StateofChargeLookup(currentBatteryLevel)
         newIndex = min(currentIndex + 15, len(self.StateOfChargeMap)-1)
-        return RoundUp(self.StateOfChargeMap[newIndex])
+        return currentBatteryLevel + RoundUp(self.BatteryCapacity * self.StateOfChargeMap[newIndex] * 0.01)
 
     def StateofChargeLookup(self, currentBatteryLevel):
         for charge in range(1, len(self.StateOfChargeMap)):

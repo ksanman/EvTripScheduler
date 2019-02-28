@@ -28,13 +28,14 @@ class FileTripBuilder(TripBuilder, object):
     def GetRoute(self):
         osrmRoute = self.Osrm.GetRouteFromFile(self.RouteFilePath)
         startLocation = osrmRoute['Coordinates'][0]
-        route = [Stop(0, "Start", 0, 0, 0, location=Coordinate(startLocation[0], startLocation[1]))]
+        route = [Stop(0, "Start", 0, 0, 0, ChargerConnection(0,0), Coordinate(startLocation[0], startLocation[1]))]
 
         if self.HasDestinationCharger:
             for stop in range(len(self.Chargers)):
                 charger = self.Chargers[stop]
                 chargerLocation = Coordinate(charger.AddressInfo.Latitude, charger.AddressInfo.Longitude)
-                chargerConnection = ChargerConnection(charger.UsageCost, charger.Connections[0].PowerKw, charger.Connections[0].Amps, charger.Connections[0].Voltage)
+                cost = charger.UsageCost if charger.UsageCost is not None else 0
+                chargerConnection = ChargerConnection(cost, charger.Connections[0].PowerKw, charger.Connections[0].Amps, charger.Connections[0].Voltage)
                 distanceFromPrevious, durationFromPrevious = self.Osrm.GetDistanceAndDurationBetweenPoints(route[stop].Location, chargerLocation)
                 energyExpended = RoundUp(self.Vehicle.Drive(RoadSegment(distanceFromPrevious, durationFromPrevious, 0)))
                 route.append(Stop(stop, str(charger.AddressInfo.Title) ,energyExpended, distanceFromPrevious, self.ConvertFromSecondsToFifteenMinuteBlock(durationFromPrevious), chargerConnection, chargerLocation))
@@ -43,10 +44,11 @@ class FileTripBuilder(TripBuilder, object):
             for stop in range(len(self.Chargers)-1):
                 charger = self.Chargers[stop]
                 chargerLocation = Coordinate(charger.AddressInfo.Latitude, charger.AddressInfo.Longitude)
-                chargerConnection = ChargerConnection(charger.UsageCost, charger.Connections[0].PowerKw, charger.Connections[0].Amps, charger.Connections[0].Voltage)
+                cost = charger.UsageCost if charger.UsageCost is not None else 0
+                chargerConnection = ChargerConnection(cost, charger.Connections[0].PowerKw, charger.Connections[0].Amps, charger.Connections[0].Voltage)
                 distanceFromPrevious, durationFromPrevious = self.Osrm.GetDistanceAndDurationBetweenPoints(route[stop].Location, chargerLocation)
                 energyExpended = RoundUp(self.Vehicle.Drive(RoadSegment(distanceFromPrevious, durationFromPrevious, 0)))
-                route.append(Stop(stop, str(charger.AddressInfo.Title),energyExpended, distanceFromPrevious,  self.ConvertFromSecondsToFifteenMinuteBlock(durationFromPrevious), chargerConnection, chargerLocation))
+                route.append(Stop(stop, str(charger.AddressInfo.Title), energyExpended, distanceFromPrevious,  self.ConvertFromSecondsToFifteenMinuteBlock(durationFromPrevious), chargerConnection, chargerLocation))
 
             destinationLocation =osrmRoute['Coordinates'][-1]
             destinationCoordinate = Coordinate(destinationLocation[0], destinationLocation[1])

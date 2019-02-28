@@ -35,7 +35,7 @@ class EvTripScheduleEnvironment(Environment):
         """
         charger = self.Route[currentStopIndex].ChargerConnection
         nextTime = min(currentTime + 1,  self.MaxTripTime - 1)
-        deltaBattery =  RoundUp(self.Vehicle.Charge(currentBatteryLevel, charger))
+        deltaBattery =  self.Vehicle.Charge(currentBatteryLevel, charger)
         nextBattery = min(currentBatteryLevel + deltaBattery, self.MaxBattery - 1)
         reward = self.ComputeChargingReward(nextTime, nextBattery, deltaBattery, charger.Price)
 
@@ -45,9 +45,9 @@ class EvTripScheduleEnvironment(Environment):
         reward = self.ComputeTimeReward(timeBlock)
         if stop ==  self.NumberOfStops - 1:
             if not self.HasFinalCharger:
-                reward += 0 if batteryLevel >  self.MaxBattery * 0.50 else -1
+                reward += 0 if batteryLevel >  (self.MaxBattery * 0.50) else -1
         else:
-            reward += 0 if batteryLevel >  self.MaxBattery * 0.20 else -1
+            reward += 0 if batteryLevel > (self.MaxBattery * 0.20) else -3
 
         return reward
 
