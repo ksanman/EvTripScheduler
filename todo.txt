@@ -1,0 +1,11 @@
+TODO list. 
+
+Add in OSRM to get route using coordinates, addresses, and city names. 
+Add in Database support. 
+Draw the final map with a route planned to all charging stations. 
+Create the scheduler module. 
+Create parameters that can be placed in the scheduler module. 
+Add the energy modeling classes to the vehicle module. 
+Add more car models. 
+Create a service to query the databases for on the server
+Place OSRM on the server. 
