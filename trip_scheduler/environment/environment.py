@@ -12,7 +12,8 @@ class Environment():
         self.NumberOfStops = numberOfStops
         self.ExpectedTripTime = expectedTripTime
         self.MaxTripTime = RoundUp(self.ExpectedTripTime * 1.25)
-        self.MaxBattery = maxBattery
+        self.MaxBattery = maxBattery + 1
+        self.NumberOfStates = self.NumberOfStops * self.MaxTripTime * self.MaxBattery
         self.HasFinalCharger = hasDestinationCharger
         self.ActionSpace = np.array([[[[0] if stop == 0 \
             else [] if stop == self.NumberOfStops - 1 \
@@ -25,6 +26,9 @@ class Environment():
             for _ in range(self.MaxBattery)] \
                 for _ in range(self.MaxTripTime)] \
                     for _ in range(self.NumberOfStops)])
+
+        print 'Building Environment:\n\nNumber of Stops: {0} \nExpected Trip Time: {1} ({2} minutes) \nMax Trip Time: {3} ({4} minutes) \nMax Battery: {5}\nHas Charger at Destination: {6} \nTotal Number of States: {7}'\
+            .format(self.NumberOfStops, self.ExpectedTripTime, self.ExpectedTripTime*15, self.MaxTripTime, self.MaxTripTime*15, self.MaxBattery-1, self.HasFinalCharger, self.NumberOfStates)
 
         self.PopulateTransitions()
         

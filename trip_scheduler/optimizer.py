@@ -1,6 +1,8 @@
 from environment import SimpleEnvironment
 import numpy as np
 from schedule import Schedule
+from stat import Stat
+
 from schedule_stop import ScheduleStop
 
 class Optimizer:
@@ -55,7 +57,7 @@ class Optimizer:
         ActionSpace = environment.ActionSpace
         Transitions = environment.Transitions
         Values = values
-        policy = np.zeros((NumberOfStops, MaxTripTime, MaxBattery), dtype=np.int8)
+        policy = np.zeros((NumberOfStops, MaxTripTime, MaxBattery)).astype(int)
 
         for stop in range(NumberOfStops - 1, -1, -1):
             for time in range(MaxTripTime - 1, -1, -1):
@@ -85,25 +87,29 @@ class Optimizer:
         tripStats = []
         tripTime = 0
         state = environment.Reset()
+        tripStats.append(Stat(state, None))
 
         while True:
 
             actionToTake = policy[state.StopIndex, state.TimeBlock, state.BatteryLevel]
 
-            tripStats.append([state, actionToTake])
-
             nextState, reward, isDone = environment.Step(actionToTake)
-            tripTime += nextState.TimeBlock
+            tripTime += (nextState.TimeBlock - tripTime)
             totalReward += reward
 
             if actionToTake == 1:
                 if self.IsStopInList(nextState.StopIndex, chargingStations):
                     chargingStations[self.GetStopIndex(nextState.StopIndex, chargingStations)].TimeAtStop += 1
                 else:
-                    chargingStations.append(ScheduleStop(nextState.StopIndex, route[nextState.StopIndex].Name, 1))
+                    chargingStations.append(ScheduleStop(nextState.StopIndex, route.PossibleStops[nextState.StopIndex].Name, 1))
+            
+            state = nextState
+            tripStats.append(Stat(state, actionToTake))
 
             if isDone:
                 break
+            
+           
 
         if nextState.StopIndex == environment.NumberOfStops - 1:
             return Schedule(route.Polyline, chargingStations, route.PossibleStops[nextState.StopIndex], tripTime, nextState.BatteryLevel, True, tripStats)

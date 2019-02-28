@@ -16,14 +16,14 @@ class SimpleTripBuilder(TripBuilder, object):
         return self.HasDestinationCharger
 
     def GetRoute(self):
-        route = [Stop(0, "Start", 1, 1, None)]
+        route = [Stop(0, "Start", 0, 0, 0, None)]
 
         for stop in range(1, self.NumberOfStops - 1, 1):
-            route.append(Stop(stop, str(stop), 1, 1, ChargerConnection(0.13, 25)))
+            route.append(Stop(stop, str(stop), 1, 1, 1, ChargerConnection(0.13, 25)))
 
         if self.HasDestinationCharger:
-            route.append(Stop(self.NumberOfStops-1, "Destination", 1, 1, ChargerConnection(0.13, 25)))
+            route.append(Stop(self.NumberOfStops-1, "Destination", 1, 1, 1, ChargerConnection(0.13, 25)))
         else:
-            route.append(Stop(self.NumberOfStops-1, "Destination", 1, 1, None))
+            route.append(Stop(self.NumberOfStops-1, "Destination", 1, 1, 1, None))
 
         return Route(route)
