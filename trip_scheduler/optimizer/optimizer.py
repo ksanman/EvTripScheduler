@@ -1,9 +1,12 @@
-from environment import SimpleEnvironment
-import numpy as np
-from schedule import Schedule
 from stat import Stat
 
+import numpy as np
+
+from schedule import Schedule
 from schedule_stop import ScheduleStop
+
+from ..environment import SimpleEnvironment
+
 
 class Optimizer:
     def __init__(self):
@@ -127,7 +130,3 @@ class Optimizer:
             if currentStop == stop.Order:
                 return True
         return False
-
-        
-
-

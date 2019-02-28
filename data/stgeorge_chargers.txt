@@ -1,0 +1,610 @@
+[
+    {
+        "AddressInfo": {
+            "AccessComments": "24 hours daily",
+            "AddressLine1": "748 E Main St",
+            "AddressLine2": null,
+            "ContactEmail": null,
+            "ContactTelephone1": "888-758-4389",
+            "ContactTelephone2": null,
+            "CountryID": 2,
+            "DistanceUnit": 0,
+            "ID": 106143,
+            "Latitude": 41.643879,
+            "Longitude": -111.914097,
+            "Postcode": "84339",
+            "RelatedURL": null,
+            "StateOrProvince": "UT",
+            "Title": "MAVERIK",
+            "Town": "Wellsville",
+            "DistanceFromCurrentWaypoint": 4740.21498194,
+            "TripDistance": null
+        },
+        "Connections": [
+            {
+                "Amps": 100,
+                "ConnectionTypeID": 2,
+                "CurrentTypeID": 10,
+                "ID": 157845,
+                "LevelID": 3,
+                "PowerKW": 40.0,
+                "Quantity": 1,
+                "Voltage": 400
+            }
+        ],
+        "ID": 1,
+        "UsuageCost": "0.00",
+        "IntersectionLatitude": 41.644869,
+        "IntersectionLongitude": -111.914032
+    },
+    {
+        "AddressInfo": {
+            "AccessComments": "24 hours daily",
+            "AddressLine1": "1874 W 2700 N",
+            "AddressLine2": null,
+            "ContactEmail": null,
+            "ContactTelephone1": "888-758-4389",
+            "ContactTelephone2": null,
+            "CountryID": 2,
+            "DistanceUnit": 0,
+            "ID": 110945,
+            "Latitude": 41.307097,
+            "Longitude": -112.024261,
+            "Postcode": "84404",
+            "RelatedURL": null,
+            "StateOrProvince": "UT",
+            "Title": "MAVERIK",
+            "Town": "Farr West",
+            "DistanceFromCurrentWaypoint": 4368.18181231,
+            "TripDistance": null
+        },
+        "Connections": [
+            {
+                "Amps": 100,
+                "ConnectionTypeID": 2,
+                "CurrentTypeID": 10,
+                "ID": 157845,
+                "LevelID": 3,
+                "PowerKW": 40.0,
+                "Quantity": 1,
+                "Voltage": 400
+            }
+        ],
+        "ID": 2,
+        "UsuageCost": "0.00",
+        "IntersectionLatitude": 41.311471,
+        "IntersectionLongitude": -112.026131
+    },
+    {
+        "AddressInfo" : {
+            "AccessComments": "Dealership business hours",
+            "AddressLine1": "615 W Riverdale Rd",
+            "AddressLine2": null,
+            "ContactEmail": null,
+            "ContactTelephone1": "801-781-4500",
+            "ContactTelephone2": null,
+            "CountryID": 2,
+            "DistanceUnit": 0,
+            "ID": 14577,
+            "Latitude": 41.180064,
+            "Longitude": -111.993926,
+            "Postcode": "84405",
+            "RelatedURL": null,
+            "StateOrProvince": "UT",
+            "Title": "Ken Garff Nissan - Riverdale",
+            "Town": "Riverdale",
+            "DistanceFromCurrentWaypoint": 3856.7383082,
+            "TripDistance": null
+        },
+        "Connections": [
+            {
+                "Amps": 100,
+                "ConnectionTypeID": 2,
+                "CurrentTypeID": 10,
+                "ID": 157845,
+                "LevelID": 3,
+                "PowerKW": 40.0,
+                "Quantity": 1,
+                "Voltage": 400
+            }
+        ],
+        "ID": 3,
+        "UsuageCost": "0.00",
+        "IntersectionLatitude": 41.192178, 
+        "IntersectionLongitude": -112.004591
+    },
+    {
+        "AddressInfo" : {
+            "AccessComments": "Dealership business hours",
+            "AddressLine1": "777 SW Temple",
+            "AddressLine2": null,
+            "ContactEmail": null,
+            "ContactTelephone1": "801-322-5663",
+            "ContactTelephone2": null,
+            "CountryID": 2,
+            "DistanceUnit": 0,
+            "ID": 28754,
+            "Latitude": 40.75259,
+            "Longitude": -111.893299,
+            "Postcode": "84101",
+            "RelatedURL": null,
+            "StateOrProvince": "UT",
+            "Title": "Ken Garff Nissan - Salt Lake City",
+            "Town": "Salt Lake City",
+            "DistanceFromCurrentWaypoint": 4302.03080598,
+            "TripDistance": null
+        },
+        "Connections": [
+            {
+                "Amps": 100,
+                "ConnectionTypeID": 2,
+                "CurrentTypeID": 10,
+                "ID": 157845,
+                "LevelID": 3,
+                "PowerKW": 40.0,
+                "Quantity": 1,
+                "Voltage": 400
+            }
+        ],
+        "ID": 4,
+        "UsuageCost": "0.00",
+        "IntersectionLatitude": 40.765961, 
+        "IntersectionLongitude": -111.913383 
+    },
+    {
+        "AddressInfo": {
+            "AccessComments": "24 hours daily; for Tesla use only",
+            "AddressLine1": "2312 S State St",
+            "AddressLine2": null,
+            "ContactEmail": null,
+            "ContactTelephone1": "877-798-3752",
+            "ContactTelephone2": null,
+            "CountryID": 2,
+            "DistanceUnit": 0,
+            "ID": 47770,
+            "Latitude": 40.720616,
+            "Longitude": -111.8887785,
+            "Postcode": "84115",
+            "RelatedURL": null,
+            "StateOrProvince": "UT",
+            "Title": "Tesla Service Center",
+            "Town": "South Salt Lake",
+            "DistanceFromCurrentWaypoint": 4401.55255262,
+            "TripDistance": null
+        },
+        "Connections": [
+            {
+                "Amps": 100,
+                "ConnectionTypeID": 2,
+                "CurrentTypeID": 10,
+                "ID": 157845,
+                "LevelID": 3,
+                "PowerKW": 40.0,
+                "Quantity": 1,
+                "Voltage": 400
+            }
+        ],
+        "ID": 5,
+        "UsuageCost": "0.00",
+        "IntersectionLatitude": 40.725206, 
+        "IntersectionLongitude": -111.904668
+    },
+    {
+        "AddressInfo": {
+            "AccessComments": "Dealership business hours",
+            "AddressLine1": "4528 S State St",
+            "AddressLine2": null,
+            "ContactEmail": null,
+            "ContactTelephone1": "801-262-5521  855-900-7584",
+            "ContactTelephone2": null,
+            "CountryID": 2,
+            "DistanceUnit": 0,
+            "ID": 14328,
+            "Latitude": 40.672936,
+            "Longitude": -111.889147,
+            "Postcode": "84107",
+            "RelatedURL": null,
+            "StateOrProvince": "UT",
+            "Title": "Tim Dahle Nissan",
+            "Town": "Murray",
+            "DistanceFromCurrentWaypoint": 4740.95929069,
+            "TripDistance": null
+        },
+        "Connections": [
+            {
+                "Amps": 100,
+                "ConnectionTypeID": 2,
+                "CurrentTypeID": 10,
+                "ID": 157845,
+                "LevelID": 3,
+                "PowerKW": 40.0,
+                "Quantity": 1,
+                "Voltage": 400
+            }
+        ],
+        "ID": 6,
+        "UsuageCost": "0.00",
+        "IntersectionLatitude": 40.679581, 
+        "IntersectionLongitude": -111.902250
+    },
+    {
+        "AddressInfo": {
+            "AccessComments": "Dealership business hours",
+            "AddressLine1": "11155 S Jordan Gateway",
+            "AddressLine2": null,
+            "ContactEmail": null,
+            "ContactTelephone1": "801-727-4651",
+            "ContactTelephone2": null,
+            "CountryID": 2,
+            "DistanceUnit": 0,
+            "ID": 56939,
+            "Latitude": 40.548839,
+            "Longitude": -111.897475,
+            "Postcode": "84095",
+            "RelatedURL": null,
+            "StateOrProvince": "UT",
+            "Title": "Tim Dahle Nissan Southtowne",
+            "Town": "South Jordan",
+            "DistanceFromCurrentWaypoint": 3745.17362684,
+            "TripDistance": null
+        },
+        "Connections": [
+            {
+                "Amps": 100,
+                "ConnectionTypeID": 2,
+                "CurrentTypeID": 10,
+                "ID": 157845,
+                "LevelID": 3,
+                "PowerKW": 40.0,
+                "Quantity": 1,
+                "Voltage": 400
+            }
+        ],
+        "ID": 7,
+        "UsuageCost": "0.00",
+        "IntersectionLatitude": 40.549634, 
+        "IntersectionLongitude": -111.896259
+    },
+    {
+        "AddressInfo": {
+            "AccessComments": "24 hours daily",
+            "AddressLine1": "14814 Minuteman Dr",
+            "AddressLine2": null,
+            "ContactEmail": null,
+            "ContactTelephone1": "888-758-4389",
+            "ContactTelephone2": null,
+            "CountryID": 2,
+            "DistanceUnit": 0,
+            "ID": 106121,
+            "Latitude": 40.482223,
+            "Longitude": -111.897011,
+            "Postcode": "84020",
+            "RelatedURL": null,
+            "StateOrProvince": "UT",
+            "Title": "MAVERIK",
+            "Town": "Draper",
+            "DistanceFromCurrentWaypoint": 4361.48287262,
+            "TripDistance": null
+        },
+        "Connections": [
+            {
+                "Amps": 100,
+                "ConnectionTypeID": 2,
+                "CurrentTypeID": 10,
+                "ID": 157845,
+                "LevelID": 3,
+                "PowerKW": 40.0,
+                "Quantity": 1,
+                "Voltage": 400
+            }
+        ],
+        "ID": 8,
+        "UsuageCost": "0.00",
+        "IntersectionLatitude": 40.487236, 
+        "IntersectionLongitude": -111.895792 
+    },
+    {
+        "AddressInfo": {
+            "AccessComments": "24 hours daily",
+            "AddressLine1": "College Dr",
+            "AddressLine2": null,
+            "ContactEmail": null,
+            "ContactTelephone1": "888-758-4389",
+            "ContactTelephone2": null,
+            "CountryID": 2,
+            "DistanceUnit": 0,
+            "ID": 52429,
+            "Latitude": 40.2762501,
+            "Longitude": -111.7149763,
+            "Postcode": "84058",
+            "RelatedURL": null,
+            "StateOrProvince": "UT",
+            "Title": "UVU",
+            "Town": "Orem",
+            "DistanceFromCurrentWaypoint": 4606.81217363,
+            "TripDistance": null
+        },
+        "Connections": [
+            {
+                "Amps": 100,
+                "ConnectionTypeID": 2,
+                "CurrentTypeID": 10,
+                "ID": 157845,
+                "LevelID": 3,
+                "PowerKW": 40.0,
+                "Quantity": 1,
+                "Voltage": 400
+            }
+        ],
+        "ID": 9,
+        "UsuageCost": "0.00",
+        "IntersectionLatitude": 40.284919, 
+        "IntersectionLongitude": -111.725683
+    },
+    {
+        "AddressInfo": {
+            "AccessComments": "24 hours daily",
+            "AddressLine1": "725 E Main St",
+            "AddressLine2": null,
+            "ContactEmail": null,
+            "ContactTelephone1": "888-758-4389",
+            "ContactTelephone2": null,
+            "CountryID": 2,
+            "DistanceUnit": 0,
+            "ID": 103132,
+            "Latitude": 39.9758,
+            "Longitude": -111.769867,
+            "Postcode": "84655",
+            "RelatedURL": null,
+            "StateOrProvince": "UT",
+            "Title": "MAVERIK",
+            "Town": "Santaquin",
+            "DistanceFromCurrentWaypoint": 324.21597112,
+            "TripDistance": null
+        },
+        "Connections": [
+            {
+                "Amps": 100,
+                "ConnectionTypeID": 2,
+                "CurrentTypeID": 10,
+                "ID": 157845,
+                "LevelID": 3,
+                "PowerKW": 40.0,
+                "Quantity": 1,
+                "Voltage": 400
+            }
+        ],
+        "ID": 10,
+        "UsuageCost": "0.00",
+        "IntersectionLatitude": 39.978869, 
+        "IntersectionLongitude": -111.769527
+    },
+    {
+        "AddressInfo": {
+            "AccessComments": null,
+            "AddressLine1": "2100 S Main Street",
+            "AddressLine2": null,
+            "ContactEmail": null,
+            "ContactTelephone1": null,
+            "ContactTelephone2": null,
+            "CountryID": 2,
+            "DistanceUnit": 0,
+            "ID": 82757,
+            "Latitude": 39.678111,
+            "Longitude": -111.841003,
+            "Postcode": "84648",
+            "RelatedURL": null,
+            "StateOrProvince": "UT",
+            "Title": "Nephi Supercharger",
+            "Town": "Nephi",
+            "DistanceFromCurrentWaypoint": 4559.001149,
+            "TripDistance": null
+        },
+        "Connections": [
+            {
+                "Amps": 100,
+                "ConnectionTypeID": 2,
+                "CurrentTypeID": 10,
+                "ID": 157845,
+                "LevelID": 3,
+                "PowerKW": 40.0,
+                "Quantity": 1,
+                "Voltage": 400
+            }
+        ],
+        "ID": 11,
+        "UsuageCost": "0.00",
+        "IntersectionLatitude": 39.687900, 
+        "IntersectionLongitude": -111.831491
+    },
+    {
+        "AddressInfo": {
+            "AccessComments": "24 hours daily",
+            "AddressLine1": "965 UT-99",
+            "AddressLine2": null,
+            "ContactEmail": null,
+            "ContactTelephone1": "888-758-4389",
+            "ContactTelephone2": null,
+            "CountryID": 2,
+            "DistanceUnit": 0,
+            "ID": 91773,
+            "Latitude": 38.948219,
+            "Longitude": -112.345855,
+            "Postcode": "84631",
+            "RelatedURL": null,
+            "StateOrProvince": "UT",
+            "Title": "MAVERIK",
+            "Town": "Fillmore",
+            "DistanceFromCurrentWaypoint": 4612.57376555,
+            "TripDistance": null
+        },
+        "Connections": [
+            {
+                "Amps": 100,
+                "ConnectionTypeID": 2,
+                "CurrentTypeID": 10,
+                "ID": 157845,
+                "LevelID": 3,
+                "PowerKW": 40.0,
+                "Quantity": 1,
+                "Voltage": 400
+            }
+        ],
+        "ID": 12,
+        "UsuageCost": "0.00",
+        "IntersectionLatitude": 38.953255,  
+        "IntersectionLongitude": -112.348173
+    },
+    {
+        "AddressInfo": {
+            "AccessComments": "24 hours daily; for Tesla use only",
+            "AddressLine1": "Littlefield Interchange",
+            "AddressLine2": null,
+            "ContactEmail": null,
+            "ContactTelephone1": "877-798-3752",
+            "ContactTelephone2": null,
+            "CountryID": 2,
+            "DistanceUnit": 0,
+            "ID": 28067,
+            "Latitude": 38.249149,
+            "Longitude": -112.652524,
+            "Postcode": "84713",
+            "RelatedURL": null,
+            "StateOrProvince": "UT",
+            "Title": "Beaver Valley Chevron - Tesla",
+            "Town": "Beaver",
+            "DistanceFromCurrentWaypoint": 4159.97956095,
+            "TripDistance": null
+        },
+        "Connections": [
+            {
+                "Amps": 100,
+                "ConnectionTypeID": 2,
+                "CurrentTypeID": 10,
+                "ID": 157845,
+                "LevelID": 3,
+                "PowerKW": 40.0,
+                "Quantity": 1,
+                "Voltage": 400
+            }
+        ],
+        "ID": 13,
+        "UsuageCost": "0.00",
+        "IntersectionLatitude": 38.253059, 
+        "IntersectionLongitude": -112.650294
+    },
+    {
+        "AddressInfo": {
+            "AccessComments": "24 hours daily",
+            "AddressLine1": "444 Old US Hwy 91",
+            "AddressLine2": null,
+            "ContactEmail": null,
+            "ContactTelephone1": "888-758-4389",
+            "ContactTelephone2": null,
+            "CountryID": 2,
+            "DistanceUnit": 0,
+            "ID": 102992,
+            "Latitude": 37.7307201,
+            "Longitude": -113.0539535,
+            "Postcode": "84721",
+            "RelatedURL": null,
+            "StateOrProvince": "UT",
+            "Title": "MAVERIK",
+            "Town": "Cedar City",
+            "DistanceFromCurrentWaypoint": 438.6567197,
+            "TripDistance": null
+        },
+        "Connections": [
+            {
+                "Amps": 100,
+                "ConnectionTypeID": 2,
+                "CurrentTypeID": 10,
+                "ID": 157845,
+                "LevelID": 3,
+                "PowerKW": 40.0,
+                "Quantity": 1,
+                "Voltage": 400
+            }
+        ],
+        "ID": 14,
+        "UsuageCost": "0.00",
+        "IntersectionLatitude": 37.731824, 
+        "IntersectionLongitude": -113.049436
+    },
+    {
+        "AddressInfo": {
+            "AccessComments": "24 hours daily",
+            "AddressLine1": "980 Hoodoo way",
+            "AddressLine2": null,
+            "ContactEmail": null,
+            "ContactTelephone1": "888-758-4389",
+            "ContactTelephone2": null,
+            "CountryID": 2,
+            "DistanceUnit": 0,
+            "ID": 91739,
+            "Latitude": 37.144719,
+            "Longitude": -113.487444,
+            "Postcode": "84780",
+            "RelatedURL": null,
+            "StateOrProvince": "UT",
+            "Title": "MAVERIK",
+            "Town": "Washington",
+            "DistanceFromCurrentWaypoint": 3982.24382964,
+            "TripDistance": null
+        },
+        "Connections": [
+            {
+                "Amps": 100,
+                "ConnectionTypeID": 2,
+                "CurrentTypeID": 10,
+                "ID": 157845,
+                "LevelID": 3,
+                "PowerKW": 40.0,
+                "Quantity": 1,
+                "Voltage": 400
+            }
+        ],
+        "ID": 15,
+        "UsuageCost": "0.00",
+        "IntersectionLatitude": 37.150356,
+        "IntersectionLongitude": -113.483609
+    },
+    {
+        "AddressInfo":{
+            "AccessComments": "24 hours daily; for Tesla use only",
+            "AddressLine1": "1091 N Bluff St",
+            "AddressLine2": null,
+            "ContactEmail": null,
+            "ContactTelephone1": "877-798-3752",
+            "ContactTelephone2": null,
+            "CountryID": 2,
+            "DistanceUnit": 0,
+            "ID": 27737,
+            "Latitude": 37.1258437,
+            "Longitude": -113.6022763,
+            "Postcode": "84770",
+            "RelatedURL": null,
+            "StateOrProvince": "UT",
+            "Title": "Sunset Corner Shopping Center - Tesla",
+            "Town": "St. George",
+            "DistanceFromCurrentWaypoint": 4331.61099195,
+            "TripDistance": null
+        },
+        "Connections": [
+            {
+                "Amps": 100,
+                "ConnectionTypeID": 2,
+                "CurrentTypeID": 10,
+                "ID": 157845,
+                "LevelID": 3,
+                "PowerKW": 40.0,
+                "Quantity": 1,
+                "Voltage": 400
+            }
+        ], 
+        "ID": 16, 
+        "UsuageCost": "0.00",
+        "IntersectionLatitude": 37.112851, 
+        "IntersectionLongitude": -113.556478
+    }
+]

@@ -1,4 +1,6 @@
-from context import SimpleEnvironment, Trip, Optimizer
+from ..environment import SimpleEnvironment
+from ..trip_builder import Trip
+from ..optimizer import Optimizer
 from visualize import Visualize
 
 class OptimizerVisualization:

@@ -1,4 +1,5 @@
-from context import EvTripScheduleEnvironment, Trip, Stop, ChargerConnection, Vehicle, Route, RoadSegment
+from ..environment import EvTripScheduleEnvironment
+from..trip_builder import Trip, Stop, ChargerConnection, Vehicle, Route
 from visualize import Visualize
 
 class EvTripScheduleEnvironmentVisualization:

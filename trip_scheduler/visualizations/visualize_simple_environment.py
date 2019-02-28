@@ -1,4 +1,5 @@
-from context import SimpleEnvironment, Trip
+from ..environment import SimpleEnvironment
+from ..trip_builder import Trip
 from visualize import Visualize
 
 class SimpleEnvironmentVisualization:
