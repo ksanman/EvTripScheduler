@@ -2,6 +2,7 @@ import numpy as np
 from ..utility import RoundUp
 from transition import Transition
 import abc, six
+from state import State
 
 @six.add_metaclass(abc.ABCMeta)
 class Environment():
@@ -42,16 +43,16 @@ class Environment():
         """ Gets the reward and next state for the given state and action. 
         """
         if action == 0:
-            nextStopIndex, nextTime, nextBattery, reward = self.Drive(currentStopIndex, currentTime, currentBatteryLevel)
+            nextState, reward = self.Drive(currentStopIndex, currentTime, currentBatteryLevel)
         elif action == 1:
-            nextStopIndex, nextTime, nextBattery, reward = self.Charge(currentStopIndex, currentTime, currentBatteryLevel)
+            nextState, reward = self.Charge(currentStopIndex, currentTime, currentBatteryLevel)
             
-        isDone = True if nextStopIndex ==  self.NumberOfStops - 1 \
-            else True if currentBatteryLevel == 0 \
-                else True if currentTime ==  self.MaxTripTime - 1 \
+        isDone = True if nextState.StopIndex ==  self.NumberOfStops - 1 \
+            else True if nextState.BatteryLevel == 0 \
+                else True if nextState.TimeBlock ==  self.MaxTripTime - 1 \
                     else False
 
-        return Transition(1.0, [nextStopIndex, nextTime, nextBattery], reward, isDone)
+        return Transition(1.0, nextState, reward, isDone)
 
     @abc.abstractmethod
     def Drive(self, currentStopIndex, currentTime, currentBatteryLevel):
@@ -72,6 +73,19 @@ class Environment():
     @abc.abstractmethod
     def ComputeTimeReward(self, time):
         pass
+
+    @abc.abstractmethod
+    def GetStopName(self, index):
+        pass
+
+    def Reset(self):
+        self.State = State(0, 0, self.MaxBattery-1)
+        return self.State
+
+    def Step(self, action):
+        transition = self.Transitions[self.State.StopIndex, self.State.TimeBlock, self.State.BatteryLevel, action]
+        self.State = transition.NextState
+        return (self.State, transition.Reward, transition.IsDone)
 
     def GetRewards(self):
         drivingRewards = np.zeros((self.NumberOfStops, self.MaxTripTime, self.MaxBattery))

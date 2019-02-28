@@ -1,4 +1,5 @@
 from environment import Environment
+from state import State
 
 class EvTripScheduleEnvironment(Environment):
     def __init__(self,trip):
@@ -26,7 +27,7 @@ class EvTripScheduleEnvironment(Environment):
         nextBattery = max(currentBatteryLevel - nextStop.EnergyExpended, 0)
         reward = self.ComputeDrivingReward(nextStopIndex, nextTime, nextBattery)
 
-        return (nextStopIndex, nextTime, nextBattery, reward)
+        return State(nextStopIndex, nextTime, nextBattery), reward
 
     def Charge(self, currentStopIndex, currentTime, currentBatteryLevel):
         """ Computes the reward and next state for the charging action. 
@@ -37,7 +38,7 @@ class EvTripScheduleEnvironment(Environment):
         nextBattery = min(currentBatteryLevel + deltaBattery, self.MaxBattery - 1)
         reward = self.ComputeChargingReward(nextTime, nextBattery, deltaBattery, charger.Price)
 
-        return (currentStopIndex, nextTime, nextBattery, reward)
+        return State(currentStopIndex, nextTime, nextBattery), reward
 
     def ComputeDrivingReward(self, stop, timeBlock, batteryLevel):
         reward = self.ComputeTimeReward(timeBlock)
@@ -56,3 +57,6 @@ class EvTripScheduleEnvironment(Environment):
 
     def ComputeTimeReward(self, time):
         return self.ExpectedTripTime - time if time > self.ExpectedTripTime else 0   
+
+    def GetStopName(self, stopIndex):
+        return self.Route[stopIndex].Name

@@ -4,7 +4,7 @@ from visualize import Visualize
 class EvTripScheduleEnvironmentVisualization:
     def run(self):
         # Build a simple trip of 3 locations, an expected time of 3, and a battery capacity of 3. 
-        stops = [Stop(1, 1, ChargerConnection(0.13, power=25)), Stop(1, 1, ChargerConnection(0.13, power=25)), Stop(1, 1, ChargerConnection(0.13, power=25))]
+        stops = [Stop(1, 1, 1, ChargerConnection(0.13, power=25)), Stop(2, 1, 1, ChargerConnection(0.13, power=25)), Stop(3, 1, 1, ChargerConnection(0.13, power=25))]
         possibleStops = Route(stops)
         expectedTime = 3
         vehicle = Vehicle(3)

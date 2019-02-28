@@ -1,4 +1,5 @@
 from environment import Environment
+from state import State
 
 class SimpleEnvironment(Environment):
     def __init__(self,trip):
@@ -19,7 +20,7 @@ class SimpleEnvironment(Environment):
         nextBattery = max(currentBatteryLevel - 1, 0)
         reward = self.ComputeDrivingReward(nextStopIndex, nextTime, nextBattery)
 
-        return (nextStopIndex, nextTime, nextBattery, reward)
+        return State(nextStopIndex, nextTime, nextBattery), reward
 
     def Charge(self, currentStopIndex, currentTime, currentBatteryLevel):
         """ Computes the reward and next state for the charging action. 
@@ -29,7 +30,7 @@ class SimpleEnvironment(Environment):
         nextBattery = min(currentBatteryLevel +  1,  self.MaxBattery - 1)
         reward = self.ComputeChargingReward(nextTime, nextBattery, nextBattery-currentBatteryLevel, 0.13)
 
-        return (nextStopIndex, nextTime, nextBattery, reward)
+        return State(nextStopIndex, nextTime, nextBattery), reward
 
     def ComputeDrivingReward(self, stop, timeBlock, batteryLevel):
         reward = self.ComputeTimeReward(timeBlock)
@@ -48,3 +49,6 @@ class SimpleEnvironment(Environment):
 
     def ComputeTimeReward(self, time):
         return self.ExpectedTripTime - time if time > self.ExpectedTripTime else 0   
+
+    def GetStopName(self, stopIndex):
+        return str(stopIndex)

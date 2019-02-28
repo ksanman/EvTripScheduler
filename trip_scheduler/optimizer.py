@@ -1,5 +1,7 @@
 from environment import SimpleEnvironment
 import numpy as np
+from schedule import Schedule
+from schedule_stop import ScheduleStop
 
 class Optimizer:
     def __init__(self):
@@ -29,8 +31,9 @@ class Optimizer:
 
                         for action in actionSpace:
                             reward = Transitions[stop, time, batteryLevel, action].Reward
-                            nextStop, nextTime, nextBattery = Transitions[stop, time, batteryLevel, action].NextState
-                            expectedValues.append(reward + discount * values[nextStop, nextTime, nextBattery])
+                            nextState = Transitions[stop, time, batteryLevel, action].NextState
+                            expectedValues.append(reward + discount * values[nextState.StopIndex,\
+                                 nextState.TimeBlock, nextState.BatteryLevel])
 
                         if actionSpace == []:
                             continue
@@ -52,7 +55,7 @@ class Optimizer:
         ActionSpace = environment.ActionSpace
         Transitions = environment.Transitions
         Values = values
-        policy = np.zeros((NumberOfStops, MaxTripTime, MaxBattery))
+        policy = np.zeros((NumberOfStops, MaxTripTime, MaxBattery), dtype=np.int8)
 
         for stop in range(NumberOfStops - 1, -1, -1):
             for time in range(MaxTripTime - 1, -1, -1):
@@ -62,16 +65,63 @@ class Optimizer:
 
                     for action in actionSpace:
                         reward = Transitions[stop, time, batteryLevel, action].Reward
-                        nextStop, nextTime, nextBattery = Transitions[stop, time, batteryLevel, action].NextState
-                        expectedValues.append(reward + Values[nextStop, nextTime, nextBattery])
+                        nextState = Transitions[stop, time, batteryLevel, action].NextState
+                        expectedValues.append(reward + Values[nextState.StopIndex, nextState.TimeBlock, nextState.BatteryLevel])
 
                     if actionSpace == []:
                         continue
 
-                    policy[stop, time, batteryLevel] = np.argmax(expectedValues)
+                    policy[stop, time, batteryLevel] = int(np.argmax(expectedValues))
 
         self.Policy = policy
         return self.Policy
 
-    def GetSchedule(self, policy, environment):
-        pass
+    def GetSchedule(self, policy, route, environment):
+
+        totalReward = 0.0
+        chargingStations = []
+
+        #TODO Capture trip stats
+        tripStats = []
+        tripTime = 0
+        state = environment.Reset()
+
+        while True:
+
+            actionToTake = policy[state.StopIndex, state.TimeBlock, state.BatteryLevel]
+
+            tripStats.append([state, actionToTake])
+
+            nextState, reward, isDone = environment.Step(actionToTake)
+            tripTime += nextState.TimeBlock
+            totalReward += reward
+
+            if actionToTake == 1:
+                if self.IsStopInList(nextState.StopIndex, chargingStations):
+                    chargingStations[self.GetStopIndex(nextState.StopIndex, chargingStations)].TimeAtStop += 1
+                else:
+                    chargingStations.append(ScheduleStop(nextState.StopIndex, route[nextState.StopIndex].Name, 1))
+
+            if isDone:
+                break
+
+        if nextState.StopIndex == environment.NumberOfStops - 1:
+            return Schedule(route.Polyline, chargingStations, route.PossibleStops[nextState.StopIndex], tripTime, nextState.BatteryLevel, True, tripStats)
+        else:
+            return Schedule(route.Polyline, chargingStations, route.PossibleStops[nextState.StopIndex], tripTime, nextState.BatteryLevel, False, tripStats)
+
+    def GetStopIndex(self, currentStop, chargingStations):
+        for index, stop in enumerate(chargingStations):
+            if currentStop == stop.Order:
+                return index
+
+        raise Exception("Stop not found!")
+    def IsStopInList(self, currentStop, stopList):
+        for stop in stopList:
+            if currentStop == stop.Order:
+                return True
+        return False
+
+        
+
+

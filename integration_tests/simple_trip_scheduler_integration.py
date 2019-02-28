@@ -1,8 +1,8 @@
 from context import SimpleTripBuilder, Optimizer, SimpleEnvironment, Vehicle, Optimizer
 
-numberOfStops = 17
-expectedTime = 28
-batteryCapacity = 4
+numberOfStops = 10
+expectedTime = 25
+batteryCapacity = 5
 hasCharge = True
 
 tripBuilder = SimpleTripBuilder(numberOfStops, hasCharge)
@@ -16,6 +16,12 @@ optimizer = Optimizer()
 expectedValues = optimizer.ComputeExpectedValue(environment)
 
 policy = optimizer.GetOptimalPolicy(expectedValues, environment)
+
+schedule = optimizer.GetSchedule(policy, trip.Route, environment)
+
+schedule.Print()
+
+# Add Visualizations here. 
 
 print 'Done'
 
