@@ -41,7 +41,7 @@ class Schedule:
             m.add_child(polyline)
 
             for stop in self.ChargingStops:
-                folium.Marker(location=[stop.Location.Latitude, stop.Location.Longitude], popup=stop.Name + '\n Stop for {0} mintues'.format(stop.TimeAtStop)).add_to(m)
+                folium.Marker(location=[stop.Location.Latitude, stop.Location.Longitude], popup=stop.Name + '\n\n Stop for {0} mintues'.format(stop.TimeAtStop*15)).add_to(m)
 
 
             if not os.path.exists("temp"):
