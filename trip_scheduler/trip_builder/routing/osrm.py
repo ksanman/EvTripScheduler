@@ -1,28 +1,39 @@
 import json
 import polyline
 import requests
-from coordinate import Coordinate
-from ..utility import RoundUp
+from ..trip import Coordinate
+from ...utility import RoundUp
 
 class Osrm:
     def __init__(self):
-        self.RouteRequestString = 'http://router.project-osrm.org/route/v1/driving/{0},{1};{2},{3}?overview=full&steps=true'
+        self.RouteRequestString = 'http://router.project-osrm.org/route/v1/driving/{0}?overview=full&steps=true'
         self.DistanceRequestString = 'http://router.project-osrm.org/route/v1/driving/{0},{1};{2},{3}?overview=simplified'  
 
-    def GetRouteFromOsrm(self, start, end):
-            """ Submits a request to OSRM to get a route data. All that are needed are the start coordinates
-                and the end coordinates in latitude, longitude pairs. 
-            """
+    def GetRouteFromOsrm(self, coordinates):
+        """ Submits a request to OSRM to get a route data. All that are needed are the start coordinates
+            and the end coordinates in latitude, longitude pairs. 
+        """
 
-            print 'Getting route...'
-            urlRequest = self.RouteRequestString.format(start.AddressInfo.Longitude, start.AddressInfo.Latitude, end.AddressInfo.Longitude, end.AddressInfo.Latitude)
-            response = requests.get(urlRequest)
-            content = response.content 
-            jsonData = content.decode('utf8').replace("'", '"')
-            print 'Route recieved.'
-            # Load the JSON to a Python list & dump it back out as formatted JSON
-            data = json.loads(jsonData)
-            return self.GetRouteFromJson(data)
+        print 'Getting route...'
+        urlRequest = self.GetFullRequestString(coordinates)
+        response = requests.get(urlRequest)
+        content = response.content 
+        jsonData = content.decode('utf8').replace("'", '"')
+        print 'Route recieved.'
+        # Load the JSON to a Python list & dump it back out as formatted JSON
+        data = json.loads(jsonData)
+        return self.GetRouteFromJson(data)
+
+    def GetFullRequestString(self, coordinates):
+
+        coordinateString = ''
+
+        for coordinate in coordinates:
+            coordinateString += '{0},{1};'.format(coordinate.Longitude, coordinate.Latitude)
+
+        coordinateString = coordinateString[:-1]
+
+        return self.RouteRequestString.format(coordinateString)
             
     def GetRouteFromFile(self, filename):
         """ Loads a .json file containing a OSRM route response and constructs a route from the data. 

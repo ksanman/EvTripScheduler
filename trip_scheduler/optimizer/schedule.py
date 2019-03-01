@@ -1,6 +1,9 @@
 import folium
 import os 
 
+from ..trip_builder import Coordinate
+from ..trip_builder import Osrm
+
 class Schedule:
     def __init__(self, coordinates, chargingStops, finalStop, tripTime, finalBatteryLevel, isSuccesful, tripStats):
         self.Coordinates = coordinates
@@ -10,10 +13,12 @@ class Schedule:
         self.IsSuccesful = isSuccesful
         self.FinalStop = finalStop
         self.TripStats = tripStats
+        self.Osrm = Osrm()
 
     def Print(self):
         if self.IsSuccesful:
-            print 'Trip Successful! \nTotal Time: {0} minutes ({1} time blocks) \n'.format(self.TripTime*15, self.TripTime)
+            time = self.GetTime()
+            print 'Trip Successful! \nTotal Time: {0} ({1} time blocks) \n'.format(time, self.TripTime)
                 
             if self.ChargingStops != []:
                 print 'Stop at the following locations: \n\n'
@@ -28,16 +33,33 @@ class Schedule:
 
         self.DrawMap()
 
+    def GetTime(self):
+        totalMinutes = self.TripTime*15
+        days = totalMinutes/24/60
+        hours = totalMinutes/60%24
+        minutes = totalMinutes%60
+
+        return '{0} days, {1} hours, {2} minutes'.format(days, hours, minutes) if days > 0 \
+            else '{0} hours, {1} minutes'.format(hours, minutes) if minutes > 0 \
+                else '{0} minutes'.format(minutes)
+        
+
     def DrawMap(self): 
         """
             Draw a route on an OSM map and display the charging points on top of it. 
-        """   
-        
+        """
+
         if self.Coordinates != []:
             # Create the map and add the line
             print('Drawing route')
+
+            routePoints = [Coordinate(self.Coordinates[0][0], self.Coordinates[0][1])]
+            routePoints.extend([ stop.Location for stop in self.ChargingStops])
+            routePoints.append(Coordinate(self.Coordinates[-1][0], self.Coordinates[-1][1]))
+            route = self.Osrm.GetRouteFromOsrm(routePoints)
+
             m = folium.Map(location=[41.9, -97.3], zoom_start=4)
-            polyline = folium.PolyLine(locations=self.Coordinates, weight=5)
+            polyline = folium.PolyLine(locations=route['Coordinates'], weight=5)
             m.add_child(polyline)
 
             for stop in self.ChargingStops:

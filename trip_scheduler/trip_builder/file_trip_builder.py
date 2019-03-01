@@ -1,11 +1,11 @@
 from trip_builder import TripBuilder
 from charger_context import ChargerContext
-from stop import Stop
-from osrm import Osrm
-from coordinate import Coordinate
-from road_segment import RoadSegment
-from charger_connection import ChargerConnection
-from route import Route
+from trip import Stop
+from routing import Osrm
+from trip import Coordinate
+from trip import RoadSegment
+from trip import ChargerConnection
+from routing import Route
 from ..utility import RoundUp
 
 class FileTripBuilder(TripBuilder, object):
