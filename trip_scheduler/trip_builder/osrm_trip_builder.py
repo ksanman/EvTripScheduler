@@ -19,7 +19,7 @@ class OsrmTripBuilder(TripBuilder, object):
 
     def GetNumberOfStops(self):
         self.OsrmRoute = self.Osrm.GetRouteFromOsrm([Coordinate(self.StartPoint[0], self.StartPoint[1]), Coordinate(self.EndPoint[0], self.EndPoint[1])])
-        self.Chargers = self.ChargerContext.GetNearestChargersFromDatabase(self.OsrmRoute['Coordinates'], 5)
+        self.Chargers = self.ChargerContext.GetNearestChargersFromDatabase(self.OsrmRoute['Coordinates'], 3)
         self.NumberOfStops = len(self.Chargers) + 2 if self.HasDestinationCharger != None and self.HasDestinationCharger is False else len(self.Chargers) + 1
         return self.NumberOfStops
 
