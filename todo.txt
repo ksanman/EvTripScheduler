@@ -1,7 +1,5 @@
 TODO list. 
 
-Create the scheduler module. 
-Create parameters that can be placed in the scheduler module. 
 Add the energy modeling classes to the vehicle module. 
 Add more car models. 
 Benchmark with Tesla Trip Planner

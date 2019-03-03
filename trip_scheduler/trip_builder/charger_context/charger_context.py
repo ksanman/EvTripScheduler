@@ -629,7 +629,7 @@ class ChargerContext:
             if isInCharger:
                 chargers[index].Connections.append(Connection(amps=charger['amps'], ID=charger['connectionid'], powerKw=charger['powerkw'], voltage=charger['voltage']))
             else:
-                chargers.append(Charger(addressInfo=AddressInfo(addressLine1=charger['addressline1'], addressLine2=charger['addressline2'], ID=charger['addressinfoid'], lat=charger['latitude'],long=charger['longitude'], title=charger['title']), connections=[Connection(amps=charger['amps'], ID=charger['connectionid'], powerKw=charger['powerkw'], voltage=charger['voltage'])], ID=charger['id'], usageCost=charger['usagecost'], intersectionLatitude=charger['intersectionlatitude'], intersectionLongitude=charger['intersectionlongitude']))
+                chargers.append(Charger(addressInfo=AddressInfo(addressLine1=charger['addressline1'], addressLine2=charger['addressline2'], ID=charger['addressinfoid'], lat=charger['latitude'],long=charger['longitude'], title=charger['title']), connections=[Connection(amps=charger['amps'], ID=charger['connectionid'], powerKw=charger['powerkw'], voltage=charger['voltage'])], ID=charger['id'], usageCost=int(charger['usagecost']) if self.CanParseInt(charger['usagecost']) else 0.13, intersectionLatitude=charger['intersectionlatitude'], intersectionLongitude=charger['intersectionlongitude']))
 
         return chargers
 
@@ -638,3 +638,10 @@ class ChargerContext:
             if charger.ID == id:
                 return True, chargers.index(charger)
         return False, -1
+
+    def CanParseInt(self, value):
+        try:
+            integer = int(value)
+            return True
+        except:
+            return False

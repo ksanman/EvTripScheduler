@@ -1,4 +1,4 @@
-from trip_builder import SimpleTripBuilder, FileTripBuilder
+from trip_builder import SimpleTripBuilder, FileTripBuilder, OsrmTripBuilder
 from environment import SimpleEnvironment, EvTripScheduleEnvironment
 from optimizer import Optimizer
 
@@ -15,7 +15,7 @@ class TripScheduler:
             return self.ScheduleFileTrip(parameters)
         else:
             # Plan a trip using osrm and the database
-            pass
+            return self.ScheduleOsrmTrip(parameters)
     
     def ScheduleTrip(self, expectedTime, batteryCapacity, vehicle, environment):
         trip = self.TripBuilder.BuildTrip(expectedTime, batteryCapacity, vehicle)
@@ -42,4 +42,14 @@ class TripScheduler:
         hasCharge = parameters.HasDestinationCharger
         vehicle = parameters.Vehicle
         self.TripBuilder = FileTripBuilder(routeFileName, chargersFileName, hasCharge)
+        return self.ScheduleTrip(expectedTime, batteryCapacity, vehicle, EvTripScheduleEnvironment)
+
+    def ScheduleOsrmTrip(self, parameters):
+        startPoint = parameters.StartPoint
+        endPoint = parameters.EndPoint
+        expectedTime = parameters.ExpectedTripTime
+        batteryCapacity = parameters.BatteryCapacity
+        hasCharge = parameters.HasDestinationCharger
+        vehicle = parameters.Vehicle
+        self.TripBuilder = OsrmTripBuilder(startPoint, endPoint, hasCharge)
         return self.ScheduleTrip(expectedTime, batteryCapacity, vehicle, EvTripScheduleEnvironment)
