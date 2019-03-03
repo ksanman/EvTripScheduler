@@ -1,6 +1,6 @@
 from context import OsrmTripBuilder, Optimizer, EvTripScheduleEnvironment, Optimizer, Visualize
 
-startPoint=['41.740256','-111.841764'], 
+startPoint=['41.740256','-111.841764']
 endPoint=['37.095169','-113.575974']
 expectedTime = 28
 batteryCapacity = 40

@@ -601,7 +601,10 @@ class ChargerContext:
 																				 
             WHERE 
 				con.levelid = 3
-                AND ST_DWithin(ST_MakePoint(ai.longitude, ai.latitude)::geography, (SELECT geom FROM line), {1});
+                AND ST_DWithin(ST_MakePoint(ai.longitude, ai.latitude)::geography, (SELECT geom FROM line), {1})
+            ORDER BY
+                ai.Latitude DESC,
+                ai.Longitude DESC;
         """.format(linestring, distance * 1609.344)
 
         try:

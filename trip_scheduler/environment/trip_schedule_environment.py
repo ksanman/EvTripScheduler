@@ -22,6 +22,12 @@ class EvTripScheduleEnvironment(Environment):
     def Drive(self, currentStopIndex, currentTime, currentBatteryLevel):
         """ Computes the reward and next state for the driving action. 
         """
+        if currentStopIndex == 3:
+            a = 0
+
+        if currentBatteryLevel == 40:
+            b = 0
+
         nextStopIndex = min(currentStopIndex + 1,  self.NumberOfStops - 1)
         nextStop = self.Route[nextStopIndex]
         nextTime = min(currentTime + nextStop.TimeFromPreviousStop, self.MaxTripTime - 1)

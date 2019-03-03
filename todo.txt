@@ -4,7 +4,6 @@ Add the energy modeling classes to the vehicle module.
 Add more car models. 
 Benchmark with Tesla Trip Planner
 Create a service to query the databases for on the server
-Add in OSRM to get route using coordinates, addresses, and city names. 
 Place OSRM on the server. 
 Use Leaflet as an experimental front end to show route. 
 Use OSRM frontend to show route and directions, with steps and charging steps. 

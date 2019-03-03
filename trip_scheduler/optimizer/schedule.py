@@ -40,7 +40,7 @@ class Schedule:
         minutes = totalMinutes%60
 
         return '{0} days, {1} hours, {2} minutes'.format(days, hours, minutes) if days > 0 \
-            else '{0} hours, {1} minutes'.format(hours, minutes) if minutes > 0 \
+            else '{0} hours, {1} minutes'.format(hours, minutes) if hours > 0 \
                 else '{0} minutes'.format(minutes)
         
 

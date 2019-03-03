@@ -51,8 +51,8 @@ class Visualize:
         colorbar.set_label('Rewards')
 
         fig.text(0.5, 0.96, 'Rewards for given state', ha='center', va='center')
-        fig.text(0.5, 0.04, 'Battery Level' , ha='center', va='center')
-        fig.text(0.06, 0.5, 'Time in {0} minute intervales'.format(15), ha='center', va='center', rotation='vertical')
+        fig.text(0.5, 0.04, 'Battery Level (kwh)' , ha='center', va='center')
+        fig.text(0.06, 0.5, 'Time in {0} minute intervals'.format(15), ha='center', va='center', rotation='vertical')
         
     
         plt.show()
@@ -110,8 +110,8 @@ class Visualize:
         colorbar.set_label('Expected Value')
 
         fig.text(0.5, 0.96, 'Expected Value for given state', ha='center', va='center')
-        fig.text(0.5, 0.04, 'Battery Level', ha='center', va='center')
-        fig.text(0.06, 0.5, 'Time in {0} minute intervales'.format(15) , ha='center', va='center', rotation='vertical')
+        fig.text(0.5, 0.04, 'Battery Level (kwh)', ha='center', va='center')
+        fig.text(0.06, 0.5, 'Time in {0} minute intervals'.format(15) , ha='center', va='center', rotation='vertical')
         
     
         plt.show()
@@ -147,8 +147,8 @@ class Visualize:
         colorbar.set_label('Action')
 
         fig.text(0.5, 0.96, 'Action for given state', ha='center', va='center')
-        fig.text(0.5, 0.04, 'Battery Level' , ha='center', va='center')
-        fig.text(0.06, 0.5, 'Time in {0} minute intervales'.format(15) , ha='center', va='center', rotation='vertical')
+        fig.text(0.5, 0.04, 'Battery Level (kwh)' , ha='center', va='center')
+        fig.text(0.06, 0.5, 'Time in {0} minute intervals'.format(15) , ha='center', va='center', rotation='vertical')
         
     
         plt.show()
@@ -208,7 +208,7 @@ class Visualize:
 
         labels = batteryAxes.get_xticklabels()
         plt.setp(labels, horizontalalignment='right')
-        batteryAxes.set(xlabel='Distance', ylabel='Battery Charge', title=routeName + ': Battery Charge vs Distance')
+        batteryAxes.set(xlabel='Distance (km)', ylabel='Battery Charge (kwh)', title=routeName + ': Battery Charge vs Distance')
 
 
 #        if routeName == "":
@@ -247,7 +247,7 @@ class Visualize:
         plt.yticks(np.arange(0, max(milage) + 1, yTickSpacing))
         labels = axes.get_xticklabels()
         plt.setp(labels, horizontalalignment='right')
-        axes.set(xlabel='Time', ylabel='Distance', title=routeName + ': Distance vs Time')
+        axes.set(xlabel='Time (15 minute intervals)', ylabel='Distance (km)', title=routeName + ': Distance vs Time')
 
         
         #if routeName == "":
@@ -280,7 +280,7 @@ class Visualize:
 
         labels = batteryAxes.get_xticklabels()
         plt.setp(labels, horizontalalignment='right')
-        batteryAxes.set(xlabel='Time', ylabel='Battery Charge', title=routeName + ': Battery Charge vs Time')
+        batteryAxes.set(xlabel='Time (15 minute intervals)', ylabel='Battery Charge (kwh)', title=routeName + ': Battery Charge vs Time')
         
         #if routeName == "":
         plt.show()
