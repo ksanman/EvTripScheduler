@@ -1,7 +1,7 @@
 from trip_builder import TripBuilder
-from stop import Stop
-from charger_connection import ChargerConnection
-from route import Route
+from trip import Stop
+from trip import ChargerConnection
+from routing import Route
 
 class SimpleTripBuilder(TripBuilder, object):
     def __init__(self, numberOfStops, hasDestinationCharger):
