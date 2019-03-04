@@ -55,7 +55,11 @@ class Visualize:
         fig.text(0.06, 0.5, 'Time in {0} minute intervals'.format(15), ha='center', va='center', rotation='vertical')
         
     
-        plt.show()
+        #plt.show()
+        if not os.path.exists("temp"):
+            os.mkdir('temp/')
+
+        fig.savefig('temp/Rewards.png', dpi=fig.dpi)
     
     def cmap_discretize(self, cmap, N):
         """Return a discrete colormap from the continuous colormap cmap.
@@ -114,7 +118,11 @@ class Visualize:
         fig.text(0.06, 0.5, 'Time in {0} minute intervals'.format(15) , ha='center', va='center', rotation='vertical')
         
     
-        plt.show()
+        #plt.show()
+        if not os.path.exists("temp"):
+            os.mkdir('temp/')
+
+        fig.savefig('temp/VTable.png', dpi=fig.dpi)
 
     def VisualizePolicy(self, policy):
         fig, axes = plt.subplots(self.NumberOfStops, figsize=(10,10))
@@ -151,7 +159,11 @@ class Visualize:
         fig.text(0.06, 0.5, 'Time in {0} minute intervals'.format(15) , ha='center', va='center', rotation='vertical')
         
     
-        plt.show()
+        #plt.show()
+        if not os.path.exists("temp"):
+            os.mkdir('temp/')
+
+        fig.savefig('temp/Policy.png', dpi=fig.dpi)
 
     def DisplayEvaluationGraphs(self, tripStats, route, routeName = ""):
         """ Display diagnostic graphs to see if the algorithm is working as expected. 
@@ -177,10 +189,10 @@ class Visualize:
                 
 
         self.PlotBatteryInfo(batteryInfo, routeName)
-        self.PlotBatteryVsTime(batteryDistance, routeName)
+        self.PlotBatteryVsDistance(batteryDistance, routeName)
         self.PlotTimeVsDistance(timeDistance, routeName)
 
-    def PlotBatteryVsTime(self, batteryDistance, routeName):
+    def PlotBatteryVsDistance(self, batteryDistance, routeName):
         """ Plots the battery level as a funtion of battery level and distance. 
         """
         batteryDistance = np.array(batteryDistance)
@@ -212,12 +224,12 @@ class Visualize:
 
 
 #        if routeName == "":
-        plt.show()
+        #plt.show()
         # else:
-        #     if not os.path.exists("temp"):
-        #         os.mkdir('temp/')
+        if not os.path.exists("temp"):
+            os.mkdir('temp/')
 
-        #     figure.savefig('temp/' + routeName + '_BatteryChargeVsDistance.png', dpi=figure.dpi)
+        figure.savefig('temp/BatteryVsDistance.png', dpi=figure.dpi)
 
     def PlotTimeVsDistance(self, timeDistance, routeName):
         """ Plots the time as a funtion of distance. 
@@ -251,12 +263,12 @@ class Visualize:
 
         
         #if routeName == "":
-        plt.show()
+        #plt.show()
         # else:
-        #     if not os.path.exists("temp"):
-        #         os.mkdir('temp/')
+        if not os.path.exists("temp"):
+            os.mkdir('temp/')
 
-        #     figure.savefig('temp/' + routeName + '_TimeVsDistance.png', dpi=figure.dpi)
+        figure.savefig('temp/TimeVsDistance.png', dpi=figure.dpi)
 
     def PlotBatteryInfo(self, batteryInfo, routeName):
         """ Plots the battery level as a funtion of battery level and time. 
@@ -283,9 +295,9 @@ class Visualize:
         batteryAxes.set(xlabel='Time (15 minute intervals)', ylabel='Battery Charge (kwh)', title=routeName + ': Battery Charge vs Time')
         
         #if routeName == "":
-        plt.show()
+        #plt.show()
         #else:
-        #    if not os.path.exists("temp"):
-        #        os.mkdir('temp/')
+        if not os.path.exists("temp"):
+            os.mkdir('temp/')
 
-        #    figure.savefig('temp/' + routeName + '_BatteryChargeVsTime.png', dpi=figure.dpi)
+        figure.savefig('temp/BatteryVsTime.png', dpi=figure.dpi)

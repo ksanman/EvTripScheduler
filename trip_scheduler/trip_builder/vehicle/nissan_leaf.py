@@ -16,14 +16,27 @@ class NissanLeaf(Vehicle):
 
         return roadSegment.Distance / self.KhwPerKm
 
-    def Charge(self, currentBatteryLevel, chargingConnection=None):
+    def Charge(self, currentBatteryLevel, chargingConnection):
         """
             Returns the energy gained for charging a battery on for 15 minutes. 
             The current battery level is provided to give a better estimation.
         """
-        currentIndex = self.StateofChargeLookup(currentBatteryLevel)
-        newIndex = min(currentIndex + 15, len(self.StateOfChargeMap)-1)
-        return currentBatteryLevel + RoundUp(self.BatteryCapacity * self.StateOfChargeMap[newIndex] * 0.01)
+        #currentIndex = self.StateofChargeLookup(currentBatteryLevel)
+        #newIndex = min(currentIndex + 15, len(self.StateOfChargeMap)-1)
+        #return currentBatteryLevel + RoundUp(self.BatteryCapacity * self.StateOfChargeMap[newIndex] * 0.01)
+
+        # Power for a 15 minute charge. 
+        if currentBatteryLevel < self.BatteryCapacity * .80:
+            return chargingConnection.Power * .25
+        else:
+            batteryPercentage = float(currentBatteryLevel)/float(self.BatteryCapacity) * 100.0
+
+            # Curve dropping the charge rate to zero once the battery reaches 80%
+            factor = float(chargingConnection.Power)/pow(-20, 2)
+
+            # deltaE = a(x-100)^2
+            power = (factor) * pow(batteryPercentage - 100, 2)
+            return power * .25
 
     def StateofChargeLookup(self, currentBatteryLevel):
         for charge in range(1, len(self.StateOfChargeMap)):

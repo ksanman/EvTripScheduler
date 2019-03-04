@@ -22,18 +22,18 @@
         },
         "Connections": [
             {
-                "Amps": 100,
+                "Amps": 125,
                 "ConnectionTypeID": 2,
                 "CurrentTypeID": 10,
                 "ID": 157845,
                 "LevelID": 3,
-                "PowerKW": 40.0,
+                "PowerKW": 50.0,
                 "Quantity": 1,
                 "Voltage": 400
             }
         ],
         "ID": 1,
-        "UsuageCost": "0.00",
+        "UsuageCost": "0.13",
         "IntersectionLatitude": 41.644869,
         "IntersectionLongitude": -111.914032
     },
@@ -65,13 +65,13 @@
                 "CurrentTypeID": 10,
                 "ID": 157845,
                 "LevelID": 3,
-                "PowerKW": 40.0,
+                "PowerKW": 50.0,
                 "Quantity": 1,
                 "Voltage": 400
             }
         ],
         "ID": 2,
-        "UsuageCost": "0.00",
+        "UsuageCost": "0.13",
         "IntersectionLatitude": 41.311471,
         "IntersectionLongitude": -112.026131
     },
@@ -98,12 +98,12 @@
         },
         "Connections": [
             {
-                "Amps": 100,
+                "Amps": 125,
                 "ConnectionTypeID": 2,
                 "CurrentTypeID": 10,
                 "ID": 157845,
                 "LevelID": 3,
-                "PowerKW": 40.0,
+                "PowerKW": 50.0,
                 "Quantity": 1,
                 "Voltage": 400
             }
@@ -136,18 +136,18 @@
         },
         "Connections": [
             {
-                "Amps": 100,
+                "Amps": 125,
                 "ConnectionTypeID": 2,
                 "CurrentTypeID": 10,
                 "ID": 157845,
                 "LevelID": 3,
-                "PowerKW": 40.0,
+                "PowerKW": 50.0,
                 "Quantity": 1,
                 "Voltage": 400
             }
         ],
         "ID": 4,
-        "UsuageCost": "0.00",
+        "UsuageCost": "0.13",
         "IntersectionLatitude": 40.765961, 
         "IntersectionLongitude": -111.913383 
     },
@@ -174,18 +174,18 @@
         },
         "Connections": [
             {
-                "Amps": 100,
+                "Amps": 125,
                 "ConnectionTypeID": 2,
                 "CurrentTypeID": 10,
                 "ID": 157845,
                 "LevelID": 3,
-                "PowerKW": 40.0,
+                "PowerKW": 50.0,
                 "Quantity": 1,
                 "Voltage": 400
             }
         ],
         "ID": 5,
-        "UsuageCost": "0.00",
+        "UsuageCost": "0.13",
         "IntersectionLatitude": 40.725206, 
         "IntersectionLongitude": -111.904668
     },
@@ -212,12 +212,12 @@
         },
         "Connections": [
             {
-                "Amps": 100,
+                "Amps": 125,
                 "ConnectionTypeID": 2,
                 "CurrentTypeID": 10,
                 "ID": 157845,
                 "LevelID": 3,
-                "PowerKW": 40.0,
+                "PowerKW": 50.0,
                 "Quantity": 1,
                 "Voltage": 400
             }
@@ -250,18 +250,18 @@
         },
         "Connections": [
             {
-                "Amps": 100,
+                "Amps": 125,
                 "ConnectionTypeID": 2,
                 "CurrentTypeID": 10,
                 "ID": 157845,
                 "LevelID": 3,
-                "PowerKW": 40.0,
+                "PowerKW": 50.0,
                 "Quantity": 1,
                 "Voltage": 400
             }
         ],
         "ID": 7,
-        "UsuageCost": "0.00",
+        "UsuageCost": "0.13",
         "IntersectionLatitude": 40.549634, 
         "IntersectionLongitude": -111.896259
     },
@@ -288,12 +288,12 @@
         },
         "Connections": [
             {
-                "Amps": 100,
+                "Amps": 125,
                 "ConnectionTypeID": 2,
                 "CurrentTypeID": 10,
                 "ID": 157845,
                 "LevelID": 3,
-                "PowerKW": 40.0,
+                "PowerKW": 50.0,
                 "Quantity": 1,
                 "Voltage": 400
             }
@@ -326,18 +326,18 @@
         },
         "Connections": [
             {
-                "Amps": 100,
+                "Amps": 125,
                 "ConnectionTypeID": 2,
                 "CurrentTypeID": 10,
                 "ID": 157845,
                 "LevelID": 3,
-                "PowerKW": 40.0,
+                "PowerKW": 50.0,
                 "Quantity": 1,
                 "Voltage": 400
             }
         ],
         "ID": 9,
-        "UsuageCost": "0.00",
+        "UsuageCost": "0.13",
         "IntersectionLatitude": 40.284919, 
         "IntersectionLongitude": -111.725683
     },
@@ -364,12 +364,12 @@
         },
         "Connections": [
             {
-                "Amps": 100,
+                "Amps": 125,
                 "ConnectionTypeID": 2,
                 "CurrentTypeID": 10,
                 "ID": 157845,
                 "LevelID": 3,
-                "PowerKW": 40.0,
+                "PowerKW": 50.0,
                 "Quantity": 1,
                 "Voltage": 400
             }
@@ -402,18 +402,18 @@
         },
         "Connections": [
             {
-                "Amps": 100,
+                "Amps": 125,
                 "ConnectionTypeID": 2,
                 "CurrentTypeID": 10,
                 "ID": 157845,
                 "LevelID": 3,
-                "PowerKW": 40.0,
+                "PowerKW": 50.0,
                 "Quantity": 1,
                 "Voltage": 400
             }
         ],
         "ID": 11,
-        "UsuageCost": "0.00",
+        "UsuageCost": "0.13",
         "IntersectionLatitude": 39.687900, 
         "IntersectionLongitude": -111.831491
     },
@@ -440,12 +440,12 @@
         },
         "Connections": [
             {
-                "Amps": 100,
+                "Amps": 125,
                 "ConnectionTypeID": 2,
                 "CurrentTypeID": 10,
                 "ID": 157845,
                 "LevelID": 3,
-                "PowerKW": 40.0,
+                "PowerKW": 50.0,
                 "Quantity": 1,
                 "Voltage": 400
             }
@@ -478,18 +478,18 @@
         },
         "Connections": [
             {
-                "Amps": 100,
+                "Amps": 125,
                 "ConnectionTypeID": 2,
                 "CurrentTypeID": 10,
                 "ID": 157845,
                 "LevelID": 3,
-                "PowerKW": 40.0,
+                "PowerKW": 50.0,
                 "Quantity": 1,
                 "Voltage": 400
             }
         ],
         "ID": 13,
-        "UsuageCost": "0.00",
+        "UsuageCost": "0.13",
         "IntersectionLatitude": 38.253059, 
         "IntersectionLongitude": -112.650294
     },
@@ -516,12 +516,12 @@
         },
         "Connections": [
             {
-                "Amps": 100,
+                "Amps": 125,
                 "ConnectionTypeID": 2,
                 "CurrentTypeID": 10,
                 "ID": 157845,
                 "LevelID": 3,
-                "PowerKW": 40.0,
+                "PowerKW": 50.0,
                 "Quantity": 1,
                 "Voltage": 400
             }
@@ -554,18 +554,18 @@
         },
         "Connections": [
             {
-                "Amps": 100,
+                "Amps": 125,
                 "ConnectionTypeID": 2,
                 "CurrentTypeID": 10,
                 "ID": 157845,
                 "LevelID": 3,
-                "PowerKW": 40.0,
+                "PowerKW": 50.0,
                 "Quantity": 1,
                 "Voltage": 400
             }
         ],
         "ID": 15,
-        "UsuageCost": "0.00",
+        "UsuageCost": "0.13",
         "IntersectionLatitude": 37.150356,
         "IntersectionLongitude": -113.483609
     },
@@ -592,18 +592,18 @@
         },
         "Connections": [
             {
-                "Amps": 100,
+                "Amps": 125,
                 "ConnectionTypeID": 2,
                 "CurrentTypeID": 10,
                 "ID": 157845,
                 "LevelID": 3,
-                "PowerKW": 40.0,
+                "PowerKW": 50.0,
                 "Quantity": 1,
                 "Voltage": 400
             }
         ], 
         "ID": 16, 
-        "UsuageCost": "0.00",
+        "UsuageCost": "0.13",
         "IntersectionLatitude": 37.112851, 
         "IntersectionLongitude": -113.556478
     }

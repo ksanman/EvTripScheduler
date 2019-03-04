@@ -28,11 +28,14 @@ class Optimizer:
             iteration += 1
             print 'Iteration {0}'.format(iteration)
 
-            for stop in range(NumberOfStops):
-                for time in range(MaxTripTime):
+            for stop in range(NumberOfStops - 1, -1, -1):
+                for time in range(MaxTripTime - 1, -1, -1):
                     for batteryLevel in range(MaxBattery):
                         actionSpace = ActionSpace[stop, time, batteryLevel]
                         expectedValues = []
+
+                        if stop == 11:
+                            a = 0
 
                         for action in actionSpace:
                             reward = Transitions[stop, time, batteryLevel, action].Reward
@@ -62,11 +65,14 @@ class Optimizer:
         Values = values
         policy = np.zeros((NumberOfStops, MaxTripTime, MaxBattery)).astype(int)
 
-        for stop in range(NumberOfStops - 1, -1, -1):
-            for time in range(MaxTripTime - 1, -1, -1):
+        for stop in range(NumberOfStops):
+            for time in range(MaxTripTime):
                 for batteryLevel in range(MaxBattery):
                     actionSpace = ActionSpace[stop, time, batteryLevel]
                     expectedValues = []
+
+                    if stop == 11:
+                        a = 0
 
                     for action in actionSpace:
                         reward = Transitions[stop, time, batteryLevel, action].Reward
