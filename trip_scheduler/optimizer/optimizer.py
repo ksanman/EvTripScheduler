@@ -16,11 +16,19 @@ class Optimizer:
         NumberOfStops = environment.NumberOfStops
         MaxTripTime = environment.MaxTripTime
         MaxBattery = environment.MaxBattery
+        ExpectedTripTime = environment.ExpectedTripTime
+        TerminalRewards = environment.TerminalRewards
         ActionSpace = environment.ActionSpace
         Transitions = environment.Transitions
         values = np.zeros((NumberOfStops, MaxTripTime, MaxBattery))
         discount = 1.0
         iteration = 0
+
+        # Get the terminal reward
+        for time in range(MaxTripTime):
+            for batteryLevel in range(MaxBattery):
+                values[NumberOfStops - 1, time, batteryLevel] = TerminalRewards[batteryLevel, time]
+
 
         while True:
             delta = 0
@@ -40,8 +48,12 @@ class Optimizer:
                         for action in actionSpace:
                             reward = Transitions[stop, time, batteryLevel, action].Reward
                             nextState = Transitions[stop, time, batteryLevel, action].NextState
-                            expectedValues.append(reward + discount * values[nextState.StopIndex,\
-                                 nextState.TimeBlock, nextState.BatteryLevel])
+
+                            if nextState is None:
+                                expectedValues.append(reward)
+                            else:
+                                expectedValues.append(reward + discount * values[nextState.StopIndex,\
+                                     nextState.TimeBlock, nextState.BatteryLevel])
 
                         if actionSpace == []:
                             continue
@@ -77,7 +89,13 @@ class Optimizer:
                     for action in actionSpace:
                         reward = Transitions[stop, time, batteryLevel, action].Reward
                         nextState = Transitions[stop, time, batteryLevel, action].NextState
-                        expectedValues.append(reward + Values[nextState.StopIndex, nextState.TimeBlock, nextState.BatteryLevel])
+
+                        if nextState is None:
+                                expectedValues.append(reward)
+                        else:
+                            expectedValues.append(reward + values[nextState.StopIndex,\
+                                    nextState.TimeBlock, nextState.BatteryLevel])
+                        #expectedValues.append(reward + Values[nextState.StopIndex, nextState.TimeBlock, nextState.BatteryLevel])
 
                     if actionSpace == []:
                         continue

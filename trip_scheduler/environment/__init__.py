@@ -1,2 +1,3 @@
 from simple_environment import SimpleEnvironment
 from trip_schedule_environment import EvTripScheduleEnvironment
+from ev_battery_only_reward_environment import BatteryRewardOnlyEnvironment

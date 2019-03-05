@@ -1,4 +1,4 @@
-from .environment import SimpleEnvironment, EvTripScheduleEnvironment
+from .environment import SimpleEnvironment, EvTripScheduleEnvironment, BatteryRewardOnlyEnvironment
 from .optimizer import Optimizer
 from .trip_builder import SimpleTripBuilder, Trip, Stop, ChargerConnection, FileTripBuilder, SimpleVehicle, NissanLeaf, OsrmTripBuilder
 from .trip_builder.routing import Route

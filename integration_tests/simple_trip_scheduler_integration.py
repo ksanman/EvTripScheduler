@@ -1,8 +1,8 @@
 from context import SimpleTripBuilder, Optimizer, SimpleEnvironment, Optimizer, Visualize
 
-numberOfStops = 10
-expectedTime = 12
-batteryCapacity = 8
+numberOfStops = 3
+expectedTime = 4
+batteryCapacity = 2
 hasCharge = True
 vehicle = 'SimpleVehicle'
 
@@ -24,8 +24,8 @@ schedule.Print()
 
 # Add Visualizations here. 
 visualizer = Visualize(environment.NumberOfStops, environment.MaxTripTime, environment.MaxBattery, environment.ExpectedTripTime)
-#visualizer.VisualizeRewards(*environment.GetRewards())
-#visualizer.VisualizeValueTable(expectedValues)
-#visualizer.VisualizePolicy(policy)
+visualizer.VisualizeRewards(*environment.GetRewards())
+visualizer.VisualizeValueTable(expectedValues)
+visualizer.VisualizePolicy(policy)
 visualizer.DisplayEvaluationGraphs(schedule.TripStats, trip.Route.PossibleStops)
 print 'Done'

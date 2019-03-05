@@ -15,9 +15,16 @@ class SimpleEnvironment(Environment):
     def Drive(self, currentStopIndex, currentTime, currentBatteryLevel):
         """ Computes the reward and next state for the driving action. 
         """
-        nextStopIndex = min(currentStopIndex + 1,  self.NumberOfStops - 1)
-        nextTime = min(currentTime + 1, self.MaxTripTime - 1)
-        nextBattery = max(currentBatteryLevel - 1, 0)
+        #nextStopIndex = min(currentStopIndex + 1,  self.NumberOfStops - 1)
+        #nextTime = min(currentTime + 1, self.MaxTripTime - 1)
+        #nextBattery = max(currentBatteryLevel - 1, 0)
+        nextStopIndex = currentStopIndex + 1
+        nextTime = currentTime + 1
+        nextBattery = currentBatteryLevel - 1
+
+        if nextStopIndex >= self.NumberOfStops or nextTime >= self.MaxTripTime or nextBattery < 0:
+            return None, -100
+
         reward = self.ComputeDrivingReward(nextStopIndex, nextTime, nextBattery)
 
         return State(nextStopIndex, nextTime, nextBattery), reward
@@ -26,14 +33,18 @@ class SimpleEnvironment(Environment):
         """ Computes the reward and next state for the charging action. 
         """
         nextStopIndex = currentStopIndex
-        nextTime = min(currentTime + 1,  self.MaxTripTime - 1)
-        nextBattery = min(currentBatteryLevel +  1,  self.MaxBattery - 1)
-        reward = self.ComputeChargingReward(nextTime, nextBattery, nextBattery-currentBatteryLevel, 0.13)
+        nextTime = currentTime + 1
+        nextBattery = currentBatteryLevel +  1
+
+        if nextTime >= self.MaxTripTime or nextBattery >= self.MaxBattery:
+            return None, -100
+
+        reward = self.ComputeChargingReward(nextStopIndex, nextTime, nextBattery, nextBattery-currentBatteryLevel, 0.13)
 
         return State(nextStopIndex, nextTime, nextBattery), reward
 
     def ComputeDrivingReward(self, stop, timeBlock, batteryLevel):
-        reward = self.ComputeTimeReward(timeBlock)
+        reward = self.ComputeTimeReward(timeBlock, stop)
         if stop ==  self.NumberOfStops - 1:
             if not self.HasFinalCharger:
                 reward += 0 if batteryLevel >  self.MaxBattery * 0.50 else -1
@@ -42,12 +53,14 @@ class SimpleEnvironment(Environment):
 
         return reward
 
-    def ComputeChargingReward(self, timeBlock, batteryLevel, batteryDelta, chargingPrice):
-        timeReward = self.ComputeTimeReward(timeBlock)
+    def ComputeChargingReward(self,stopIndex, timeBlock, batteryLevel, batteryDelta, chargingPrice):
+        timeReward = self.ComputeTimeReward(timeBlock,stopIndex)
         chargingReward = -((0.13*(batteryDelta)) + 0 + 0) if batteryLevel < self.MaxBattery * .90 else -1
         return timeReward + chargingReward
 
-    def ComputeTimeReward(self, time):
+    def ComputeTimeReward(self, time, stopIndex):
+        if stopIndex != self.NumberOfStops -1 and time == self.MaxTripTime - 1:
+            return -100
         return self.ExpectedTripTime - time if time > self.ExpectedTripTime else 0   
 
     def GetStopName(self, stopIndex):
