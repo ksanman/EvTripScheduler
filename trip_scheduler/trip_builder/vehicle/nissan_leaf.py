@@ -3,7 +3,7 @@ from ...utility import RoundUp
 
 class NissanLeaf(Vehicle):
 
-    KhwPerKm = 4.5
+    KhwPerKm = 6.075
 
     def __init__(self, batteryCapacity, timeBlockConstant):
         super(NissanLeaf, self).__init__(batteryCapacity, timeBlockConstant)

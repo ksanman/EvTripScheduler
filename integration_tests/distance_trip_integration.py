@@ -3,28 +3,28 @@ from time import time
 
 routeFilePath = "data/stgeorge_route.txt"
 chargersFilePath = "data/stgeorge_chargers.txt"
-expectedTime = 13
-batteryCapacity = 13
+expectedTime = 18
+batteryCapacity = 24
 hasCharge = True
 vehicle = 'NissanLeaf'
 timeBlockConstant = 5
 
 #Logan to SLC
-# distancesAndTimes = [
-#     [12.8748,840],
-#     [51.499,2220],
-#     [17.7028,960],
-#     [41.8429,1860],
-#     [14.4841,1020],
-#     [0,360],
-#     [1.60934,120]
-# ]
-
 distancesAndTimes = [
     [12.8748,840],
     [51.499,2220],
-    [23.7028,960]
+    [17.7028,960],
+    [41.8429,1860],
+    [14.4841,1020],
+    [0,360],
+    [1.60934,120]
 ]
+
+# distancesAndTimes = [
+#     [12.8748,840],
+#     [51.499,2220],
+#     [23.7028,960]
+# ]
 
 totalStartTime = time()
 
