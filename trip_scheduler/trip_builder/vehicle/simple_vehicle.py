@@ -4,8 +4,8 @@ class SimpleVehicle(Vehicle, object):
 
     KhwPerKm = 1
 
-    def __init__(self, batteryCapacity):
-        super(SimpleVehicle, self).__init__(batteryCapacity)
+    def __init__(self, batteryCapacity, timeBlockConstant):
+        super(SimpleVehicle, self).__init__(batteryCapacity, timeBlockConstant)
         
     def Drive(self, roadSegment):
         """ 

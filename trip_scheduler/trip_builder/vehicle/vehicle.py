@@ -4,8 +4,9 @@ import abc, six
 class Vehicle():
     """ Base Class to model an electric vehicle.
     """
-    def __init__(self, batteryCapacity):
+    def __init__(self, batteryCapacity, timeBlockConstant):
         self.BatteryCapacity = batteryCapacity
+        self.TimeBlockConstant = timeBlockConstant
 
     @abc.abstractmethod
     def Drive(self, roadSegment):

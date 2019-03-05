@@ -1,20 +1,37 @@
-from context import FileTripBuilder, Optimizer, EvTripScheduleEnvironment, NissanLeaf, Optimizer, Visualize
+from context import DistanceTripBuilder, Optimizer, EvTripScheduleEnvironment, NissanLeaf, Optimizer, Visualize
 from time import time
 
 routeFilePath = "data/stgeorge_route.txt"
 chargersFilePath = "data/stgeorge_chargers.txt"
-expectedTime = 28
-batteryCapacity = 40
+expectedTime = 13
+batteryCapacity = 13
 hasCharge = True
 vehicle = 'NissanLeaf'
-timeBlockConstant = 15
+timeBlockConstant = 5
+
+#Logan to SLC
+# distancesAndTimes = [
+#     [12.8748,840],
+#     [51.499,2220],
+#     [17.7028,960],
+#     [41.8429,1860],
+#     [14.4841,1020],
+#     [0,360],
+#     [1.60934,120]
+# ]
+
+distancesAndTimes = [
+    [12.8748,840],
+    [51.499,2220],
+    [23.7028,960]
+]
 
 totalStartTime = time()
 
 # Build the route
 startTripTime = time()
 
-tripBuilder = FileTripBuilder(routeFilePath, chargersFilePath, hasCharge)
+tripBuilder = DistanceTripBuilder(distancesAndTimes, hasCharge)
 
 trip = tripBuilder.BuildTrip(expectedTime, batteryCapacity, vehicle, timeBlockConstant)
 

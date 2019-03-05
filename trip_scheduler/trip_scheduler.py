@@ -3,8 +3,9 @@ from environment import SimpleEnvironment, EvTripScheduleEnvironment
 from optimizer import Optimizer
 
 class TripScheduler:
-    def __init__(self):
-        self.Optimizer = Optimizer()
+    def __init__(self, timeBlockConstant=15):
+        self.Optimizer = Optimizer(timeBlockConstant)
+        self.TimeBlockConstant = timeBlockConstant
 
     def Schedule(self, parameters):
         if parameters.NumberOfStops:
@@ -18,7 +19,7 @@ class TripScheduler:
             return self.ScheduleOsrmTrip(parameters)
     
     def ScheduleTrip(self, expectedTime, batteryCapacity, vehicle, environment):
-        trip = self.TripBuilder.BuildTrip(expectedTime, batteryCapacity, vehicle)
+        trip = self.TripBuilder.BuildTrip(expectedTime, batteryCapacity, vehicle, self.TimeBlockConstant)
         env = environment(trip)
         expectedValues = self.Optimizer.ComputeExpectedValue(env)
         policy = self.Optimizer.GetOptimalPolicy(expectedValues, env)

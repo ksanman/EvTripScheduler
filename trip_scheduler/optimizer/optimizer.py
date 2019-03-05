@@ -6,17 +6,17 @@ from schedule import Schedule
 from schedule_stop import ScheduleStop
 
 from ..environment import SimpleEnvironment
+from ..action_space import ActionSpace
 
 
 class Optimizer:
-    def __init__(self):
-        pass
+    def __init__(self, timeBlockConstant):
+        self.TimeBlockConstant = timeBlockConstant
 
     def ComputeExpectedValue(self, environment):
         NumberOfStops = environment.NumberOfStops
         MaxTripTime = environment.MaxTripTime
         MaxBattery = environment.MaxBattery
-        ExpectedTripTime = environment.ExpectedTripTime
         TerminalRewards = environment.TerminalRewards
         ActionSpace = environment.ActionSpace
         Transitions = environment.Transitions
@@ -29,7 +29,6 @@ class Optimizer:
             for batteryLevel in range(MaxBattery):
                 values[NumberOfStops - 1, time, batteryLevel] = TerminalRewards[batteryLevel, time]
 
-
         while True:
             delta = 0
             valuesCopy = values.copy()
@@ -41,9 +40,6 @@ class Optimizer:
                     for batteryLevel in range(MaxBattery):
                         actionSpace = ActionSpace[stop, time, batteryLevel]
                         expectedValues = []
-
-                        if stop == 11:
-                            a = 0
 
                         for action in actionSpace:
                             reward = Transitions[stop, time, batteryLevel, action].Reward
@@ -74,7 +70,6 @@ class Optimizer:
         MaxBattery = environment.MaxBattery
         ActionSpace = environment.ActionSpace
         Transitions = environment.Transitions
-        Values = values
         policy = np.zeros((NumberOfStops, MaxTripTime, MaxBattery)).astype(int)
 
         for stop in range(NumberOfStops):
@@ -83,19 +78,15 @@ class Optimizer:
                     actionSpace = ActionSpace[stop, time, batteryLevel]
                     expectedValues = []
 
-                    if stop == 11:
-                        a = 0
-
                     for action in actionSpace:
                         reward = Transitions[stop, time, batteryLevel, action].Reward
                         nextState = Transitions[stop, time, batteryLevel, action].NextState
 
                         if nextState is None:
-                                expectedValues.append(reward)
+                            expectedValues.append(reward)
                         else:
                             expectedValues.append(reward + values[nextState.StopIndex,\
                                     nextState.TimeBlock, nextState.BatteryLevel])
-                        #expectedValues.append(reward + Values[nextState.StopIndex, nextState.TimeBlock, nextState.BatteryLevel])
 
                     if actionSpace == []:
                         continue
@@ -118,10 +109,15 @@ class Optimizer:
             actionToTake = policy[state.StopIndex, state.TimeBlock, state.BatteryLevel]
 
             nextState, reward, isDone = environment.Step(actionToTake)
-            tripTime += (nextState.TimeBlock - tripTime)
             totalReward += reward
 
-            if actionToTake == 1:
+            if nextState is None:
+                break
+
+            tripTime += (nextState.TimeBlock - tripTime)
+            
+
+            if actionToTake == ActionSpace.Charge:
                 if self.IsStopInList(nextState.StopIndex, chargingStations):
                     chargingStations[self.GetStopIndex(nextState.StopIndex, chargingStations)].TimeAtStop += 1
                 else:
@@ -133,10 +129,10 @@ class Optimizer:
             if isDone:
                 break       
 
-        if nextState.StopIndex == environment.NumberOfStops - 1:
-            return Schedule(route.Coordinates, chargingStations, route.PossibleStops[nextState.StopIndex], tripTime, nextState.BatteryLevel, True, tripStats)
+        if nextState is not None and nextState.StopIndex == environment.NumberOfStops - 1:
+            return Schedule(route.Coordinates, chargingStations, route.PossibleStops[nextState.StopIndex], tripTime, nextState.BatteryLevel, True, tripStats, self.TimeBlockConstant)
         else:
-            return Schedule(route.Coordinates, chargingStations, route.PossibleStops[nextState.StopIndex], tripTime, nextState.BatteryLevel, False, tripStats)
+            return Schedule(route.Coordinates, chargingStations, route.PossibleStops[state.StopIndex], tripTime, state.BatteryLevel, False, tripStats, self.TimeBlockConstant)
 
     def GetStopIndex(self, currentStop, chargingStations):
         for index, stop in enumerate(chargingStations):

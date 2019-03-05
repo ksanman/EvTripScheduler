@@ -8,3 +8,4 @@ from routing import Osrm
 from .vehicle import SimpleVehicle, NissanLeaf
 from file_trip_builder import FileTripBuilder
 from osrm_trip_builder import OsrmTripBuilder
+from distance_trip_builder import DistanceTripBuilder

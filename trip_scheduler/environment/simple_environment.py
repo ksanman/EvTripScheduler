@@ -15,9 +15,6 @@ class SimpleEnvironment(Environment):
     def Drive(self, currentStopIndex, currentTime, currentBatteryLevel):
         """ Computes the reward and next state for the driving action. 
         """
-        #nextStopIndex = min(currentStopIndex + 1,  self.NumberOfStops - 1)
-        #nextTime = min(currentTime + 1, self.MaxTripTime - 1)
-        #nextBattery = max(currentBatteryLevel - 1, 0)
         nextStopIndex = currentStopIndex + 1
         nextTime = currentTime + 1
         nextBattery = currentBatteryLevel - 1

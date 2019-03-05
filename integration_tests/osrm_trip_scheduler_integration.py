@@ -6,14 +6,15 @@ expectedTime = 28
 batteryCapacity = 40
 hasCharge = True
 vehicle = 'NissanLeaf'
+timeBlockConstant = 15
 
 tripBuilder = OsrmTripBuilder(startPoint, endPoint, hasCharge)
 
-trip = tripBuilder.BuildTrip(expectedTime, batteryCapacity, vehicle)
+trip = tripBuilder.BuildTrip(expectedTime, batteryCapacity, vehicle, timeBlockConstant)
 
 environment = EvTripScheduleEnvironment(trip)
 
-optimizer = Optimizer()
+optimizer = Optimizer(timeBlockConstant)
 
 expectedValues = optimizer.ComputeExpectedValue(environment)
 

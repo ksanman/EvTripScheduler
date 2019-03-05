@@ -4,15 +4,16 @@ numberOfStops = 3
 expectedTime = 4
 batteryCapacity = 2
 hasCharge = True
+timeBlockConstant = 15
 vehicle = 'SimpleVehicle'
 
 tripBuilder = SimpleTripBuilder(numberOfStops, hasCharge)
 
-trip = tripBuilder.BuildTrip(expectedTime, batteryCapacity, vehicle)
+trip = tripBuilder.BuildTrip(expectedTime, batteryCapacity, vehicle, timeBlockConstant)
 
 environment = SimpleEnvironment(trip)
 
-optimizer = Optimizer()
+optimizer = Optimizer(timeBlockConstant)
 
 expectedValues = optimizer.ComputeExpectedValue(environment)
 

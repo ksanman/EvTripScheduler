@@ -5,7 +5,7 @@ from ..trip_builder import Coordinate
 from ..trip_builder import Osrm
 
 class Schedule:
-    def __init__(self, coordinates, chargingStops, finalStop, tripTime, finalBatteryLevel, isSuccesful, tripStats):
+    def __init__(self, coordinates, chargingStops, finalStop, tripTime, finalBatteryLevel, isSuccesful, tripStats, timeBlockConstant):
         self.Coordinates = coordinates
         self.ChargingStops = chargingStops
         self.TripTime = tripTime
@@ -14,6 +14,7 @@ class Schedule:
         self.FinalStop = finalStop
         self.TripStats = tripStats
         self.Osrm = Osrm()
+        self.TimeBlockConstant = timeBlockConstant
 
     def Print(self):
         if self.IsSuccesful:
@@ -25,16 +26,16 @@ class Schedule:
 
             for order, stop in enumerate(self.ChargingStops):
                 print '{0}: {1} (stop {2}) for {3} minutes ({4} time blocks)'\
-                    .format(order, stop.Name, stop.Order, stop.TimeAtStop*15, stop.TimeAtStop)
+                    .format(order + 1, stop.Name, stop.Order, stop.TimeAtStop*self.TimeBlockConstant, stop.TimeAtStop)
 
         else:
             print 'Trip failed after {0} minutes ({1} time blocks) at {2} (stop {3})'\
-                .format(self.TripTime*15, self.TripTime, self.FinalStop.Name, self.FinalStop.Order)
+                .format(self.TripTime* self.TimeBlockConstant, self.TripTime, self.FinalStop.Name, self.FinalStop.Order)
 
         self.DrawMap()
 
     def GetTime(self):
-        totalMinutes = self.TripTime*15
+        totalMinutes = self.TripTime* self.TimeBlockConstant
         days = totalMinutes/24/60
         hours = totalMinutes/60%24
         minutes = totalMinutes%60
@@ -63,7 +64,7 @@ class Schedule:
             m.add_child(polyline)
 
             for stop in self.ChargingStops:
-                folium.Marker(location=[stop.Location.Latitude, stop.Location.Longitude], popup=stop.Name + '\n\n Stop for {0} mintues'.format(stop.TimeAtStop*15)).add_to(m)
+                folium.Marker(location=[stop.Location.Latitude, stop.Location.Longitude], popup=stop.Name + '\n\n Stop for {0} mintues'.format(stop.TimeAtStop*self.TimeBlockConstant)).add_to(m)
 
 
             if not os.path.exists("temp"):

@@ -1,5 +1,6 @@
 import numpy as np
 from ..utility import RoundUp
+from ..action_space import ActionSpace
 from transition import Transition
 import abc, six
 from state import State
@@ -15,9 +16,9 @@ class Environment():
         self.MaxBattery = maxBattery + 1
         self.NumberOfStates = self.NumberOfStops * self.MaxTripTime * self.MaxBattery
         self.HasFinalCharger = hasDestinationCharger
-        self.ActionSpace = np.array([[[[0] if stop == 0 \
+        self.ActionSpace = np.array([[[[ActionSpace.Drive] if stop == 0 \
             else [] if stop == self.NumberOfStops - 1 \
-            else [0,1] \
+            else [ActionSpace.Drive,ActionSpace.Charge] \
             for _ in range(self.MaxBattery)] \
                 for _ in range(self.MaxTripTime)] \
                     for stop in range(self.NumberOfStops)])
@@ -27,7 +28,7 @@ class Environment():
                 for _ in range(self.MaxTripTime)] \
                     for _ in range(self.NumberOfStops)])
 
-        self.TerminalRewards = np.array([[0 for time in range(self.MaxTripTime)] for batteryLevel in range(self.MaxBattery)])
+        self.TerminalRewards = np.array([[0 for _ in range(self.MaxTripTime)] for _ in range(self.MaxBattery)])
 
         self.CalculateTerminalRewards()
 
@@ -40,14 +41,10 @@ class Environment():
         for batteryLevel in range(self.MaxBattery):
             for time in range(self.MaxTripTime):
                 reward = 0
-                if not self.HasFinalCharger:
-                    if batteryLevel == 0:
-                        reward -= 100
-                    if time == self.MaxTripTime - 1:
-                        reward -= 100
-                else:
-                    if time == self.MaxTripTime - 1:
-                        reward -= 100
+                if batteryLevel == 0:
+                    reward -= 100
+                if time == self.MaxTripTime - 1:
+                    reward -= 100
 
                 self.TerminalRewards[batteryLevel, time] = reward
 
@@ -65,15 +62,11 @@ class Environment():
     def GetTransition(self, currentStopIndex, currentTime, currentBatteryLevel, action):
         """ Gets the reward and next state for the given state and action. 
         """
-        if action == 0:
+        if action == ActionSpace.Drive:
             nextState, reward = self.Drive(currentStopIndex, currentTime, currentBatteryLevel)
-        elif action == 1:
+        elif action == ActionSpace.Charge:
             nextState, reward = self.Charge(currentStopIndex, currentTime, currentBatteryLevel)
             
-        #isDone = True if nextState.StopIndex ==  self.NumberOfStops - 1 \
-          #  else True if nextState.BatteryLevel == 0 \
-           #     else True if nextState.TimeBlock ==  self.MaxTripTime - 1 \
-            #        else False
         isDone =  nextState is None or nextState.StopIndex ==  self.NumberOfStops - 1
 
         return Transition(1.0, nextState, reward, isDone)
@@ -86,25 +79,12 @@ class Environment():
     def Charge(self, currentStopIndex, currentTime, currentBatteryLevel):
         pass
 
-    # @abc.abstractmethod
-    # def ComputeDrivingReward(self, stop, timeBlock, batteryLevel):
-    #     pass
-
-    # @abc.abstractmethod
-    # def ComputeChargingReward(self, timeBlock, batteryLevel, batteryDelta, chargingPrice):
-    #     pass
-
-    # @abc.abstractmethod
-    # def ComputeTimeReward(self, time):
-    #     pass
-
     @abc.abstractmethod
     def GetStopName(self, index):
         pass
 
     def Reset(self):
         self.State = State(0, 0, self.MaxBattery-1)
-        #self.State = State(0, 0, 3)
         return self.State
 
     def Step(self, action):

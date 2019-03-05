@@ -4,6 +4,7 @@ import matplotlib.colors as mcolors
 import numpy as np
 import os
 from decimal import Decimal, ROUND_HALF_UP
+from datetime import datetime
 
 def RoundUp(value):
     return int(Decimal(value).quantize(Decimal('0'), rounding=ROUND_HALF_UP))
@@ -14,6 +15,13 @@ class Visualize:
         self.MaxTripTime = maxTripTime
         self.MaxBattery = maxBattery
         self.ExpectedTripTime = expectedTripTime
+
+        if not os.path.exists("temp"):
+            os.mkdir('temp/')
+
+        if not os.path.exists("temp/graphs"):
+            os.mkdir('temp/graphs/')
+
 
     def VisualizeRewards(self, drivingRewards, chargingRewards):
         fig, axes = plt.subplots(self.NumberOfStops , 2, figsize=(10,10))
@@ -56,10 +64,7 @@ class Visualize:
         
     
         #plt.show()
-        if not os.path.exists("temp"):
-            os.mkdir('temp/')
-
-        fig.savefig('temp/Rewards.png', dpi=fig.dpi)
+        fig.savefig('temp/graphs/' + str(datetime.now().date()) + str(datetime.now().time()).replace(':', '.') + '_Rewards.png', dpi=fig.dpi)
     
     def cmap_discretize(self, cmap, N):
         """Return a discrete colormap from the continuous colormap cmap.
@@ -119,10 +124,8 @@ class Visualize:
         
     
         #plt.show()
-        if not os.path.exists("temp"):
-            os.mkdir('temp/')
 
-        fig.savefig('temp/VTable.png', dpi=fig.dpi)
+        fig.savefig('temp/graphs/' + str(datetime.now().date()) + str(datetime.now().time()).replace(':', '.')   + '_VTable.png', dpi=fig.dpi)
 
     def VisualizePolicy(self, policy):
         fig, axes = plt.subplots(self.NumberOfStops, figsize=(10,10))
@@ -160,10 +163,8 @@ class Visualize:
         
     
         #plt.show()
-        if not os.path.exists("temp"):
-            os.mkdir('temp/')
 
-        fig.savefig('temp/Policy.png', dpi=fig.dpi)
+        fig.savefig('temp/graphs/' + str(datetime.now().date()) + str(datetime.now().time()).replace(':', '.')  + '_Policy.png', dpi=fig.dpi)
 
     def DisplayEvaluationGraphs(self, tripStats, route, routeName = ""):
         """ Display diagnostic graphs to see if the algorithm is working as expected. 
@@ -222,14 +223,8 @@ class Visualize:
         plt.setp(labels, horizontalalignment='right')
         batteryAxes.set(xlabel='Distance (km)', ylabel='Battery Charge (kwh)', title=routeName + ': Battery Charge vs Distance')
 
-
-#        if routeName == "":
         #plt.show()
-        # else:
-        if not os.path.exists("temp"):
-            os.mkdir('temp/')
-
-        figure.savefig('temp/BatteryVsDistance.png', dpi=figure.dpi)
+        figure.savefig('temp/graphs/' + str(datetime.now().date()) + str(datetime.now().time()).replace(':', '.')  + '_BatteryVsDistance.png', dpi=figure.dpi)
 
     def PlotTimeVsDistance(self, timeDistance, routeName):
         """ Plots the time as a funtion of distance. 
@@ -261,14 +256,8 @@ class Visualize:
         plt.setp(labels, horizontalalignment='right')
         axes.set(xlabel='Time (15 minute intervals)', ylabel='Distance (km)', title=routeName + ': Distance vs Time')
 
-        
-        #if routeName == "":
-        #plt.show()
-        # else:
-        if not os.path.exists("temp"):
-            os.mkdir('temp/')
 
-        figure.savefig('temp/TimeVsDistance.png', dpi=figure.dpi)
+        figure.savefig('temp/graphs/' + str(datetime.now().date()) + str(datetime.now().time()).replace(':', '.')  + '_TimeVsDistance.png', dpi=figure.dpi)
 
     def PlotBatteryInfo(self, batteryInfo, routeName):
         """ Plots the battery level as a funtion of battery level and time. 
@@ -294,10 +283,5 @@ class Visualize:
         plt.setp(labels, horizontalalignment='right')
         batteryAxes.set(xlabel='Time (15 minute intervals)', ylabel='Battery Charge (kwh)', title=routeName + ': Battery Charge vs Time')
         
-        #if routeName == "":
         #plt.show()
-        #else:
-        if not os.path.exists("temp"):
-            os.mkdir('temp/')
-
-        figure.savefig('temp/BatteryVsTime.png', dpi=figure.dpi)
+        figure.savefig('temp/graphs/' + str(datetime.now().date()) + str(datetime.now().time()).replace(':', '.')  + '_BatteryVsTime.png', dpi=figure.dpi)

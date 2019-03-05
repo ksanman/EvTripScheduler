@@ -3,7 +3,8 @@ from vehicle import SimpleVehicle, NissanLeaf
 from ..utility import RoundUp
 
 class TripBuilder:
-    def BuildTrip(self, expectedTripTime, batteryCapacity, vehicle):
+    def BuildTrip(self, expectedTripTime, batteryCapacity, vehicle, timeBlockConstant):
+        self.TimeBlockConstant = timeBlockConstant
         self.Vehicle = self.GetVehicle(batteryCapacity, vehicle)
         numberOfStops = self.GetNumberOfStops()
         hasDestinationCharger = self.GetHasDestinationCharger()
@@ -14,9 +15,9 @@ class TripBuilder:
 
     def GetVehicle(self, batteryCapacity, vehicle):
         if vehicle == 'SimpleVehicle':
-            return SimpleVehicle(batteryCapacity)
+            return SimpleVehicle(batteryCapacity, self.TimeBlockConstant)
         if vehicle == 'NissanLeaf':
-            return NissanLeaf(batteryCapacity)
+            return NissanLeaf(batteryCapacity, self.TimeBlockConstant)
 
     def GetNumberOfStops(self):
         return None
@@ -27,6 +28,6 @@ class TripBuilder:
     def GetRoute(self):
         return None
 
-    def ConvertFromSecondsToFifteenMinuteBlock(self, seconds):
+    def ConvertToTimeBlock(self, seconds):
         minutes = seconds / 60
-        return RoundUp(minutes / 15)
+        return RoundUp(minutes / self.TimeBlockConstant)
