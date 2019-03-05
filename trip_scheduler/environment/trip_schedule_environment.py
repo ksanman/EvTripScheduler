@@ -37,7 +37,7 @@ class EvTripScheduleEnvironment(Environment):
         nextBattery = currentBatteryLevel - nextStop.EnergyExpended
 
         if nextTime >= self.MaxTripTime or nextBattery < 0:
-            return None, -135
+            return None, -100
 
         reward = self.ComputeDrivingReward(nextStopIndex, nextTime, nextBattery)
 
@@ -75,7 +75,7 @@ class EvTripScheduleEnvironment(Environment):
 
     def ComputeChargingReward(self, currentStopIndex, timeBlock, batteryLevel, batteryDelta, chargingPrice):
         timeReward = self.ComputeTimeReward(currentStopIndex, timeBlock)
-        chargingReward = 0#-((chargingPrice*(batteryDelta)) + 0 + 0) #if batteryLevel < self.MaxBattery * .90 else 0
+        chargingReward = 0 if batteryLevel < self.MaxBattery * .90 else -1#-((chargingPrice*(batteryDelta)) + 0 + 0) #if batteryLevel < self.MaxBattery * .90 else 0
         return timeReward + chargingReward
 
     def ComputeTimeReward(self, stopIndex, time):
