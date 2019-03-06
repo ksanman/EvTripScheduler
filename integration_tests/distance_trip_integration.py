@@ -3,11 +3,11 @@ from time import time
 
 routeFilePath = "data/stgeorge_route.txt"
 chargersFilePath = "data/stgeorge_chargers.txt"
-expectedTime = 18
+expectedTime = 60
 batteryCapacity = 24
 hasCharge = True
 vehicle = 'NissanLeaf'
-timeBlockConstant = 5
+timeBlockConstant = 2
 
 #Logan to SLC
 distancesAndTimes = [

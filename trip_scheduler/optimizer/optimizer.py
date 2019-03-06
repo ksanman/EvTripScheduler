@@ -35,7 +35,7 @@ class Optimizer:
             iteration += 1
             print 'Iteration {0}'.format(iteration)
 
-            for stop in range(NumberOfStops - 1, -1, -1):
+            for stop in range(NumberOfStops - 2, -1, -1):
                 for time in range(MaxTripTime - 1, -1, -1):
                     for batteryLevel in range(MaxBattery):
                         actionSpace = ActionSpace[stop, time, batteryLevel]
