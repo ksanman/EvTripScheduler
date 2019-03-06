@@ -3,11 +3,11 @@ from time import time
 
 routeFilePath = "data/stgeorge_route.txt"
 chargersFilePath = "data/stgeorge_chargers.txt"
-expectedTime = 28
+expectedTime = 96
 batteryCapacity = 40
 hasCharge = True
 vehicle = 'NissanLeaf'
-timeBlockConstant = 15
+timeBlockConstant = 5
 
 totalStartTime = time()
 

@@ -58,7 +58,7 @@ class EvTripScheduleEnvironment(Environment):
 
         if nextTime >= self.MaxTripTime:
             return None, -150
-        elif nextBattery > self.MaxBattery:
+        elif nextBattery >= self.MaxBattery:
             return None, -150
 
         reward = self.ComputeChargingReward(currentStopIndex, nextTime, nextBattery, deltaBattery, charger.Price)
