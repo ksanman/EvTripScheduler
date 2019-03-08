@@ -84,9 +84,6 @@ class EvTripScheduleEnvironment(Environment):
         timeReward = self.ComputeTimeReward(currentStopIndex, timeBlock)
         priceReward = -(0.13*(batteryDelta))
         chargingReward =  -10 if batteryLevel > (float(self.MaxBattery) * 0.90) \
-                else 0 if batteryLevel > (float(self.MaxBattery) * 0.80)\
-                else 0 if batteryLevel > (float(self.MaxBattery) * 0.70)\
-                else 0 if batteryLevel > (float(self.MaxBattery) * 0.50)\
                 else 0 if batteryLevel > (float(self.MaxBattery) * 0.20)\
                 else 1
         return timeReward + chargingReward + priceReward
