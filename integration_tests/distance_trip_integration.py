@@ -1,13 +1,11 @@
 from context import DistanceTripBuilder, Optimizer, EvTripScheduleEnvironment, NissanLeaf, Optimizer, Visualize
 from time import time
 
-routeFilePath = "data/stgeorge_route.txt"
-chargersFilePath = "data/stgeorge_chargers.txt"
-expectedTime = 60
+expectedTime =24
 batteryCapacity = 24
 hasCharge = True
 vehicle = 'NissanLeaf'
-timeBlockConstant = 2
+timeBlockConstant = 5
 
 #Logan to SLC
 distancesAndTimes = [

@@ -15,7 +15,7 @@ class EvTripScheduleEnvironment(Environment):
 
         numberOfStops = len(self.Route)
         batteryCapacity = self.Vehicle.BatteryCapacity
-        hasDestinationCharger = self.Route[-1].ChargerConnection is not None
+        hasDestinationCharger = self.Route[-1].ChargerConnection is True
         
         super(EvTripScheduleEnvironment, self).__init__(numberOfStops, trip.ExpectedTripTime, batteryCapacity, hasDestinationCharger)
     
@@ -71,14 +71,24 @@ class EvTripScheduleEnvironment(Environment):
             if not self.HasFinalCharger:
                 reward += 0 if batteryLevel > (float(self.MaxBattery) * 0.50) else -150
         else:
-            reward += 0 if batteryLevel > (float(self.MaxBattery) * 0.20) else -150
+            reward += 0 if batteryLevel > (float(self.MaxBattery) * 0.10) else -150
+            #0 if batteryLevel > (float(self.MaxBattery) * 0.50) \
+            #    else -1 if batteryLevel > (float(self.MaxBattery) * 0.40)\
+            #    else -2 if batteryLevel > (float(self.MaxBattery) * 0.30)\
+            #    else -3 if batteryLevel > (float(self.MaxBattery) * 0.20) \
+            #    else -150
 
         return reward
 
     def ComputeChargingReward(self, currentStopIndex, timeBlock, batteryLevel, batteryDelta, chargingPrice):
         timeReward = self.ComputeTimeReward(currentStopIndex, timeBlock)
-        chargingReward = -(0.13*(batteryDelta)) if batteryLevel < float(self.MaxBattery) * 0.80 else -100#
-        return timeReward + chargingReward
+        priceReward = -(0.13*(batteryDelta))
+        chargingReward =  -150 if batteryLevel > (float(self.MaxBattery) * 0.90) \
+                else -10 if batteryLevel > (float(self.MaxBattery) * 0.70)\
+                else 10 if batteryLevel > (float(self.MaxBattery) * 0.50)\
+                else 25 if batteryLevel > (float(self.MaxBattery) * 0.20)\
+                else 50
+        return timeReward + chargingReward + priceReward
 
     def ComputeTimeReward(self, stopIndex, time):
         if stopIndex != self.NumberOfStops - 1 and time == self.MaxTripTime:

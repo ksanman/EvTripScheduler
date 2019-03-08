@@ -75,8 +75,8 @@ schedule.Print()
 
 # Add Visualizations here. 
 visualizer = Visualize(environment.NumberOfStops, environment.MaxTripTime, environment.MaxBattery, environment.ExpectedTripTime)
-visualizer.VisualizeRewards(*environment.GetRewards())
-visualizer.VisualizeValueTable(expectedValues)
+#visualizer.VisualizeRewards(*environment.GetRewards())
+#visualizer.VisualizeValueTable(expectedValues)
 visualizer.VisualizePolicy(policy)
 visualizer.DisplayEvaluationGraphs(schedule.TripStats, trip.Route.PossibleStops)
 print 'Done'
