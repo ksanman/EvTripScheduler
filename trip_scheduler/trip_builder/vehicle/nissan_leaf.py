@@ -27,11 +27,11 @@ class NissanLeaf(Vehicle):
             charge = float(chargingConnection.Power) * hoursCharging
             return charge
         else:
-            batteryPercentage = float(currentBatteryLevel)/float(self.BatteryCapacity) * 100.0
+            #batteryPercentage = float(currentBatteryLevel)/float(self.BatteryCapacity) * 100.0
 
             # Curve dropping the charge rate to zero once the battery reaches 80%
-            factor = float(chargingConnection.Power)/pow(70-100, 2)
+            #factor = float(chargingConnection.Power)/pow(70-100, 2)
 
             # deltaE = a(x-100)^2
-            power = (factor) * pow(batteryPercentage - 100, 2)
-            return power * hoursCharging
+            #power = (factor) * pow(batteryPercentage - 100, 2)
+            return float(chargingConnection.Power) * 0.5 * hoursCharging

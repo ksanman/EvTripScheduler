@@ -33,7 +33,7 @@ class EvTripScheduleEnvironment(Environment):
             return None, -100
 
         nextStop = self.Route[nextStopIndex]
-        nextTime = currentTime + nextStop.TimeFromPreviousStop
+        nextTime = currentTime + nextStop.TimeFromPreviousStop 
         nextBattery = currentBatteryLevel - nextStop.EnergyExpended
 
         if nextTime >= self.MaxTripTime or nextBattery < 0:
@@ -67,11 +67,11 @@ class EvTripScheduleEnvironment(Environment):
 
     def ComputeDrivingReward(self, stopIndex, timeBlock, batteryLevel):
         reward = self.ComputeTimeReward(stopIndex, timeBlock)
-        if stopIndex ==  self.NumberOfStops - 1:
-            if not self.HasFinalCharger:
-                reward += 0 if batteryLevel > (float(self.MaxBattery) * 0.50) else -100
-        else:
-            reward += 0 if batteryLevel > (float(self.MaxBattery) * 0.20) else -10
+        if stopIndex ==  self.NumberOfStops - 1: # at the last stop
+            if not self.HasFinalCharger: # Last stop doesn't a charger
+                reward += -100 if batteryLevel < (float(self.MaxBattery) * 0.50) else 0
+        else: # All other stops
+            reward += -1 if batteryLevel > (float(self.MaxBattery) * 0.20) else -10
             #0 if batteryLevel > (float(self.MaxBattery) * 0.50) \
             #    else -1 if batteryLevel > (float(self.MaxBattery) * 0.40)\
             #    else -2 if batteryLevel > (float(self.MaxBattery) * 0.30)\
@@ -89,10 +89,14 @@ class EvTripScheduleEnvironment(Environment):
         return timeReward + chargingReward + priceReward
 
     def ComputeTimeReward(self, stopIndex, time):
-        if stopIndex != self.NumberOfStops - 1 and time == self.MaxTripTime:
-            return -100
-
-        return (self.ExpectedTripTime - time) if time > self.ExpectedTripTime else 1   
+        if stopIndex != self.NumberOfStops - 1: #not end
+            if time == self.MaxTripTime:
+                    return -100
+            return 0 #got more time
+        #end
+        if time >= self.MaxTripTime:
+             return -100
+        return (self.ExpectedTripTime - time)   
 
     def GetStopName(self, stopIndex):
         return self.Route[stopIndex].Name
