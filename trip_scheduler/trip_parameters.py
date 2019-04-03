@@ -1,5 +1,5 @@
 class TripParameters:
-    def __init__(self, expectedTripTime, batteryCapacity, vehicle, numberOfStops=None, routeFileName=None, chargersFileName=None, hasDestinationCharger=None,startPoint=None, endPoint=None):
+    def __init__(self, expectedTripTime, batteryCapacity, vehicle, numberOfStops=None, routeFileName=None, chargersFileName=None, hasDestinationCharger=None,startPoint=None, endPoint=None, tripName=''):
         self.ExpectedTripTime = expectedTripTime
         self.BatteryCapacity = batteryCapacity
         self.Vehicle = vehicle
@@ -9,3 +9,4 @@ class TripParameters:
         self.StartPoint = startPoint
         self.EndPoint = endPoint
         self.HasDestinationCharger = hasDestinationCharger
+        self.TripName = tripName

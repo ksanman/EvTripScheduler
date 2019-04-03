@@ -6,8 +6,12 @@ from ...utility import RoundUp
 
 class Osrm:
     def __init__(self):
-        self.RouteRequestString = 'http://router.project-osrm.org/route/v1/driving/{0}?overview=full&steps=true'
-        self.DistanceRequestString = 'http://router.project-osrm.org/route/v1/driving/{0},{1};{2},{3}?overview=simplified'  
+        #self.RouteRequestString = 'http://router.project-osrm.org/route/v1/driving/{0}?overview=full&steps=true'
+        self.RouteRequestString = 'http://localhost:5000/route/v1/driving/{0}?overview=full&steps=true'
+        #self.DistanceRequestString = 'http://router.project-osrm.org/route/v1/driving/{0},{1};{2},{3}?overview=simplified'  
+        self.DistanceRequestString = 'http://localhost:5000/route/v1/driving/{0},{1};{2},{3}?overview=simplified'  
+        #self.ElevationRequestString = 'https://api.open-elevation.com/api/v1/lookup?locations={0},{1}'
+        self.ElevationRequestString = 'http://192.168.99.100:8080/api/v1/lookup?locations={0},{1}'
 
     def GetRouteFromOsrm(self, coordinates):
         """ Submits a request to OSRM to get a route data. All that are needed are the start coordinates
@@ -83,3 +87,45 @@ class Osrm:
         distance = float(route["distance"]) / 1000
         duration = float(route['duration'])
         return distance, duration
+
+    def GetElevation(self, latitude, longitude):
+        try:
+            request = self.ElevationRequestString.format(latitude, longitude)
+            r = requests.get(request)
+            c = r.content
+            my_json = c.decode('utf8').replace("'", '"')
+            data = json.loads(my_json)
+            results = data['results']
+            elevationData = results[0]['elevation']
+            elevation = float(elevationData)
+            return elevation
+        except Exception as e:
+            print e
+            return 0
+
+    def GetElevationFromCoordinates(self, coordinates):
+        requestString = 'http://192.168.99.100:8080/api/v1/lookup'
+
+        headers = {
+            'Accept':'application/json',
+            'Content-Type':'application/json'
+        }
+        elevations = []
+        chunks = [coordinates[x:x+1000] for x in xrange(0, len(coordinates), 1000)]
+        for chunk in chunks:
+            locations = [{"latitude":coordinate[0], "longitude":coordinate[1]} for coordinate in chunk]
+
+            data = {"locations":locations}
+
+            jsonData = json.dumps(data)
+            r = requests.post(requestString, data=jsonData, headers=headers)
+            c = r.content
+            my_json = c.decode('utf8').replace("'", '"')
+            data = json.loads(my_json)
+            results = data['results']
+            for result in results:
+                elevationData = result['elevation']
+                latitudeData = result['latitude']
+                longitudeData = result['longitude']
+                elevations.append(Coordinate(float(latitudeData), float(longitudeData), float(elevationData)))
+        return elevations

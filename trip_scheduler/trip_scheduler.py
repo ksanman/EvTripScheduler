@@ -18,8 +18,8 @@ class TripScheduler:
             # Plan a trip using osrm and the database
             return self.ScheduleOsrmTrip(parameters)
     
-    def ScheduleTrip(self, expectedTime, batteryCapacity, vehicle, environment):
-        trip = self.TripBuilder.BuildTrip(expectedTime, batteryCapacity, vehicle, self.TimeBlockConstant)
+    def ScheduleTrip(self, expectedTime, batteryCapacity, vehicle, environment, tripName):
+        trip = self.TripBuilder.BuildTrip(expectedTime, batteryCapacity, vehicle, self.TimeBlockConstant, tripName)
         env = environment(trip)
         expectedValues = self.Optimizer.ComputeExpectedValue(env)
         policy = self.Optimizer.GetOptimalPolicy(expectedValues, env)
@@ -33,7 +33,8 @@ class TripScheduler:
         hasCharge = parameters.HasDestinationCharger
         vehicle = parameters.Vehicle
         self.TripBuilder = SimpleTripBuilder(numberOfStops, hasCharge)
-        return self.ScheduleTrip(expectedTime, batteryCapacity, vehicle, SimpleEnvironment)
+        tripName = parameters.TripName
+        return self.ScheduleTrip(expectedTime, batteryCapacity, vehicle, SimpleEnvironment, tripName)
 
     def ScheduleFileTrip(self, parameters):
         routeFileName = parameters.RouteFileName
@@ -42,8 +43,9 @@ class TripScheduler:
         batteryCapacity = parameters.BatteryCapacity
         hasCharge = parameters.HasDestinationCharger
         vehicle = parameters.Vehicle
+        tripName = parameters.TripName
         self.TripBuilder = FileTripBuilder(routeFileName, chargersFileName, hasCharge)
-        return self.ScheduleTrip(expectedTime, batteryCapacity, vehicle, EvTripScheduleEnvironment)
+        return self.ScheduleTrip(expectedTime, batteryCapacity, vehicle, EvTripScheduleEnvironment,tripName)
 
     def ScheduleOsrmTrip(self, parameters):
         startPoint = parameters.StartPoint
@@ -52,5 +54,6 @@ class TripScheduler:
         batteryCapacity = parameters.BatteryCapacity
         hasCharge = parameters.HasDestinationCharger
         vehicle = parameters.Vehicle
+        tripName = parameters.TripName
         self.TripBuilder = OsrmTripBuilder(startPoint, endPoint, hasCharge)
-        return self.ScheduleTrip(expectedTime, batteryCapacity, vehicle, EvTripScheduleEnvironment)
+        return self.ScheduleTrip(expectedTime, batteryCapacity, vehicle, EvTripScheduleEnvironment,tripName)

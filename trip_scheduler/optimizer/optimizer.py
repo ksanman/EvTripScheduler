@@ -96,7 +96,7 @@ class Optimizer:
         self.Policy = policy
         return self.Policy
 
-    def GetSchedule(self, policy, route, environment):
+    def GetSchedule(self, policy, trip, environment):
         totalReward = 0.0
         chargingStations = []
         tripStats = []
@@ -121,7 +121,7 @@ class Optimizer:
                 if self.IsStopInList(nextState.StopIndex, chargingStations):
                     chargingStations[self.GetStopIndex(nextState.StopIndex, chargingStations)].TimeAtStop += 1
                 else:
-                    chargingStations.append(ScheduleStop(nextState.StopIndex, route.PossibleStops[nextState.StopIndex].Name, 1, route.PossibleStops[nextState.StopIndex].Location))
+                    chargingStations.append(ScheduleStop(nextState.StopIndex, trip.Route.PossibleStops[nextState.StopIndex].Name, 1, trip.Route.PossibleStops[nextState.StopIndex].Location))
             
             state = nextState
             tripStats.append(Stat(state, actionToTake))
@@ -130,9 +130,9 @@ class Optimizer:
                 break       
 
         if nextState is not None and nextState.StopIndex == environment.NumberOfStops - 1:
-            return Schedule(route.Coordinates, chargingStations, route.PossibleStops[nextState.StopIndex], tripTime, nextState.BatteryLevel, True, tripStats, self.TimeBlockConstant)
+            return Schedule(trip.Route.Coordinates, chargingStations, trip.Route.PossibleStops[nextState.StopIndex], tripTime, nextState.BatteryLevel, True, tripStats, self.TimeBlockConstant, trip.TripName)
         else:
-            return Schedule(route.Coordinates, chargingStations, route.PossibleStops[state.StopIndex], tripTime, state.BatteryLevel, False, tripStats, self.TimeBlockConstant)
+            return Schedule(trip.Route.Coordinates, chargingStations, trip.Route.PossibleStops[state.StopIndex], tripTime, state.BatteryLevel, False, tripStats, self.TimeBlockConstant, trip.TripName)
 
     def GetStopIndex(self, currentStop, chargingStations):
         for index, stop in enumerate(chargingStations):

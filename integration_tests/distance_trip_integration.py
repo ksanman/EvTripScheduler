@@ -1,7 +1,7 @@
 from context import DistanceTripBuilder, Optimizer, EvTripScheduleEnvironment, NissanLeaf, Optimizer, Visualize
 from time import time
 
-expectedTime =24
+expectedTime = 24
 batteryCapacity = 24
 hasCharge = True
 vehicle = 'NissanLeaf'

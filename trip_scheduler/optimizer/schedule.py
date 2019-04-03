@@ -5,7 +5,7 @@ from ..trip_builder import Coordinate
 from ..trip_builder import Osrm
 
 class Schedule:
-    def __init__(self, coordinates, chargingStops, finalStop, tripTime, finalBatteryLevel, isSuccesful, tripStats, timeBlockConstant):
+    def __init__(self, coordinates, chargingStops, finalStop, tripTime, finalBatteryLevel, isSuccesful, tripStats, timeBlockConstant, title):
         self.Coordinates = coordinates
         self.ChargingStops = chargingStops
         self.TripTime = tripTime
@@ -15,11 +15,12 @@ class Schedule:
         self.TripStats = tripStats
         self.Osrm = Osrm()
         self.TimeBlockConstant = timeBlockConstant
+        self.Title = title
 
     def Print(self):
         if self.IsSuccesful:
             time = self.GetTime()
-            print 'Trip Successful! \nTotal Time: {0} ({1} time blocks) \n'.format(time, self.TripTime)
+            print 'Trip {0} successful! \nTotal Time: {1} ({2} time blocks) \n'.format(self.Title, time, self.TripTime)
                 
             if self.ChargingStops != []:
                 print 'Stop at the following locations: \n\n'
@@ -54,9 +55,9 @@ class Schedule:
             # Create the map and add the line
             print('Drawing route')
 
-            routePoints = [Coordinate(self.Coordinates[0][0], self.Coordinates[0][1])]
+            routePoints = [Coordinate(self.Coordinates[0].Latitude, self.Coordinates[0].Longitude)]
             routePoints.extend([ stop.Location for stop in self.ChargingStops])
-            routePoints.append(Coordinate(self.Coordinates[-1][0], self.Coordinates[-1][1]))
+            routePoints.append(Coordinate(self.Coordinates[-1].Latitude, self.Coordinates[-1].Longitude))
             route = self.Osrm.GetRouteFromOsrm(routePoints)
 
             m = folium.Map(location=[41.9, -97.3], zoom_start=4)

@@ -22,11 +22,6 @@ class EvTripScheduleEnvironment(Environment):
     def Drive(self, currentStopIndex, currentTime, currentBatteryLevel):
         """ Computes the reward and next state for the driving action. 
         """
-        # nextStopIndex = min(currentStopIndex + 1,  self.NumberOfStops - 1)
-        # nextStop = self.Route[nextStopIndex]
-        # nextTime = min(currentTime + nextStop.TimeFromPreviousStop, self.MaxTripTime - 1)
-        # nextBattery = max(currentBatteryLevel - nextStop.EnergyExpended, 0)
-
         nextStopIndex = currentStopIndex + 1
 
         if nextStopIndex >= self.NumberOfStops: 
@@ -46,11 +41,6 @@ class EvTripScheduleEnvironment(Environment):
     def Charge(self, currentStopIndex, currentTime, currentBatteryLevel):
         """ Computes the reward and next state for the charging action. 
         """
-        # charger = self.Route[currentStopIndex].ChargerConnection
-        # nextTime = min(currentTime + 1,  self.MaxTripTime - 1)
-        # deltaBattery =  RoundUp(self.Vehicle.Charge(currentBatteryLevel, charger))
-        # nextBattery = min(currentBatteryLevel + deltaBattery, self.MaxBattery - 1)
-
         charger = self.Route[currentStopIndex].ChargerConnection
         nextTime = currentTime + 1
         deltaBattery =  RoundUp(self.Vehicle.Charge(currentBatteryLevel, charger))
@@ -66,23 +56,18 @@ class EvTripScheduleEnvironment(Environment):
         return State(currentStopIndex, nextTime, nextBattery), reward
 
     def ComputeDrivingReward(self, stopIndex, timeBlock, batteryLevel):
-        reward = self.ComputeTimeReward(stopIndex, timeBlock)
+        reward = 0#self.ComputeTimeReward(stopIndex, timeBlock)
         if stopIndex ==  self.NumberOfStops - 1: # at the last stop
             if not self.HasFinalCharger: # Last stop doesn't a charger
                 reward += -100 if batteryLevel < (float(self.MaxBattery) * 0.50) else 0
         else: # All other stops
             reward += -1 if batteryLevel > (float(self.MaxBattery) * 0.20) else -10
-            #0 if batteryLevel > (float(self.MaxBattery) * 0.50) \
-            #    else -1 if batteryLevel > (float(self.MaxBattery) * 0.40)\
-            #    else -2 if batteryLevel > (float(self.MaxBattery) * 0.30)\
-            #    else -3 if batteryLevel > (float(self.MaxBattery) * 0.20) \
-            #    else -150
 
         return reward
 
     def ComputeChargingReward(self, currentStopIndex, timeBlock, batteryLevel, batteryDelta, chargingPrice):
-        timeReward = self.ComputeTimeReward(currentStopIndex, timeBlock)
-        priceReward = -(0.13*(batteryDelta))
+        timeReward = 0#self.ComputeTimeReward(currentStopIndex, timeBlock)
+        priceReward = 0#-(0.13*(batteryDelta))
         chargingReward =  -10 if batteryLevel > (float(self.MaxBattery) * 0.90) \
                 else 0 if batteryLevel > (float(self.MaxBattery) * 0.20)\
                 else 1
