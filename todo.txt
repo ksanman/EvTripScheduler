@@ -7,4 +7,3 @@ Create a service to query the databases for on the server
 Place OSRM on the server. 
 Use Leaflet as an experimental front end to show route. 
 Use OSRM frontend to show route and directions, with steps and charging steps. 
-Reduce time intervals to five minute intervals

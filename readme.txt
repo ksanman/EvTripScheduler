@@ -16,6 +16,10 @@ the current network.
 
 Summary of Modules:
 
-Third Pary Libraries:
+Third Party Libraries:
+
+Third Party Services:
+    OSRM: Run on local machine. Start with osrm-routed --algorithm=mld utah-latest.osrm
+    open-elevation: Run via docker on local machine. 
 
 Licence:
