@@ -7,9 +7,9 @@ from ...utility import RoundUp
 class Osrm:
     def __init__(self):
         #self.RouteRequestString = 'http://router.project-osrm.org/route/v1/driving/{0}?overview=full&steps=true'
-        self.RouteRequestString = 'http://localhost:5000/route/v1/driving/{0}?overview=full&steps=true'
+        self.RouteRequestString = 'http://localhost:5001/route/v1/driving/{0}?overview=full&steps=true'
         #self.DistanceRequestString = 'http://router.project-osrm.org/route/v1/driving/{0},{1};{2},{3}?overview=simplified'  
-        self.DistanceRequestString = 'http://localhost:5000/route/v1/driving/{0},{1};{2},{3}?overview=simplified'  
+        self.DistanceRequestString = 'http://localhost:5001/route/v1/driving/{0},{1};{2},{3}?overview=simplified'  
         #self.ElevationRequestString = 'https://api.open-elevation.com/api/v1/lookup?locations={0},{1}'
         self.ElevationRequestString = 'http://192.168.99.100:8080/api/v1/lookup?locations={0},{1}'
 
@@ -58,7 +58,7 @@ class Osrm:
         print 'Building Route'
         #get the intersections along the route
         intersections = self.GetIntersections(route)
-        return {'Polyline': route['geometry'], 'Coordinates':polyline.decode(route['geometry']), 'Intersections': intersections}
+        return {'RawData': data, 'Polyline': route['geometry'], 'Coordinates':polyline.decode(route['geometry']), 'Intersections': intersections}
 
     def GetIntersections(self, data):
         """

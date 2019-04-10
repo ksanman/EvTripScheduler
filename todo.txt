@@ -5,5 +5,5 @@ Add more car models.
 Benchmark with Tesla Trip Planner
 Create a service to query the databases for on the server
 Place OSRM on the server. 
-Use Leaflet as an experimental front end to show route. 
-Use OSRM frontend to show route and directions, with steps and charging steps. 
+Use OSRM frontend to show route and directions, with steps and charging steps.
+Process Multiple routes for analysis.

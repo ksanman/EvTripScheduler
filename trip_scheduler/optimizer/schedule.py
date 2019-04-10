@@ -59,6 +59,8 @@ class Schedule:
             routePoints.extend([ stop.Location for stop in self.ChargingStops])
             routePoints.append(Coordinate(self.Coordinates[-1].Latitude, self.Coordinates[-1].Longitude))
             route = self.Osrm.GetRouteFromOsrm(routePoints)
+            
+            self.OsrmRoute = route['RawData']
 
             m = folium.Map(location=[41.9, -97.3], zoom_start=4)
             polyline = folium.PolyLine(locations=route['Coordinates'], weight=5)

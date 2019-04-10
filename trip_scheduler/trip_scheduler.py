@@ -23,7 +23,7 @@ class TripScheduler:
         env = environment(trip)
         expectedValues = self.Optimizer.ComputeExpectedValue(env)
         policy = self.Optimizer.GetOptimalPolicy(expectedValues, env)
-        schedule = self.Optimizer.GetSchedule(policy, trip.Route, env)
+        schedule = self.Optimizer.GetSchedule(policy, trip, env)
         return schedule
     
     def ScheduleSimpleTrip(self, parameters):
