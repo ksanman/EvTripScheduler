@@ -1,12 +1,12 @@
 from context import OsrmTripBuilder, Optimizer, EvTripScheduleEnvironment, Optimizer, Visualize
 from time import time
 
-title = 'Logan to Moab'
+title = 'Logan to St George'
 startPoint=['41.740256','-111.841764']
-#endPoint=['37.095169','-113.575974'] #st george
-endPoint = ['38.573315', '-109.549843'] #moab
-expectedTime = 72
-batteryCapacity = 75
+endPoint=['37.095169','-113.575974'] #st george
+#endPoint = ['38.573315', '-109.549843'] #moab
+expectedTime = 120
+batteryCapacity = 40
 hasCharge = True
 vehicle = 'NissanLeaf'
 timeBlockConstant = 5
@@ -54,9 +54,9 @@ print 'Optimal trip found in {0} seconds \n'.format(time() - totalTripStart)
 schedule.Print()
 
 # Add Visualizations here. 
-#visualizer = Visualize(environment.NumberOfStops, environment.MaxTripTime, environment.MaxBattery, environment.ExpectedTripTime)
-#visualizer.VisualizeRewards(*environment.GetRewards())
-#visualizer.VisualizeValueTable(expectedValues)
-#visualizer.VisualizePolicy(policy)
-#visualizer.DisplayEvaluationGraphs(schedule.TripStats, trip.Route.PossibleStops, trip.TripName)
+visualizer = Visualize(environment.NumberOfStops, environment.MaxTripTime, environment.MaxBattery, environment.ExpectedTripTime)
+visualizer.VisualizeRewards(*environment.GetRewards())
+visualizer.VisualizeValueTable(expectedValues)
+visualizer.VisualizePolicy(policy)
+visualizer.DisplayEvaluationGraphs(schedule.TripStats, trip.Route.PossibleStops, trip.TripName)
 print 'Done'

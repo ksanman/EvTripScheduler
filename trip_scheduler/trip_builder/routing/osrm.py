@@ -9,7 +9,7 @@ class Osrm:
         #self.RouteRequestString = 'http://router.project-osrm.org/route/v1/driving/{0}?overview=full&steps=true'
         self.RouteRequestString = 'http://localhost:5001/route/v1/driving/{0}?overview=full&steps=true'
         #self.DistanceRequestString = 'http://router.project-osrm.org/route/v1/driving/{0},{1};{2},{3}?overview=simplified'  
-        self.DistanceRequestString = 'http://localhost:5001/route/v1/driving/{0},{1};{2},{3}?overview=simplified'  
+        self.DistanceRequestString = 'http://localhost:5001/route/v1/driving/{0}?overview=simplified'  
         #self.ElevationRequestString = 'https://api.open-elevation.com/api/v1/lookup?locations={0},{1}'
         self.ElevationRequestString = 'http://192.168.99.100:8080/api/v1/lookup?locations={0},{1}'
 
@@ -58,7 +58,9 @@ class Osrm:
         print 'Building Route'
         #get the intersections along the route
         intersections = self.GetIntersections(route)
-        return {'RawData': data, 'Polyline': route['geometry'], 'Coordinates':polyline.decode(route['geometry']), 'Intersections': intersections}
+        coordinates = polyline.decode(route['geometry'])
+        elevations = self.GetElevationFromCoordinates(coordinates)
+        return {'RawData': data, 'Polyline': route['geometry'], 'Coordinates':coordinates, 'Intersections': intersections, 'Elevations':elevations}
 
     def GetIntersections(self, data):
         """
@@ -73,20 +75,35 @@ class Osrm:
 
         return intersections
 
-    def GetDistanceAndDurationBetweenPoints(self, point1, point2):
+    def GetDistanceAndDurationBetweenPoints(self, points):
         """ Get the distance and travel time between two lat/long points by traveling on a road. 
             Distance is returned in km, 
             Time is returned in seconds
         """
-        request = self.DistanceRequestString.format(point1.Longitude, point1.Latitude, point2.Longitude, point2.Latitude)
-        r = requests.get(request)
-        c = r.content 
-        my_json = c.decode('utf8').replace("'", '"')
-        data = json.loads(my_json)
-        route = data["routes"][0]
-        distance = float(route["distance"]) / 1000
-        duration = float(route['duration'])
-        return distance, duration
+
+        splitPoints = [points[x:x+500] for x in range(0, len(points), 499)]
+
+        distances = []
+        durations = []
+
+        for chunk in splitPoints:
+            coords = ""
+            for point in chunk:
+                coords += str(point.Longitude) + ',' + str(point.Latitude)
+                if point != chunk[-1]:
+                    coords += ";"
+            request = self.DistanceRequestString.format(coords)
+            r = requests.get(request)
+            c = r.content 
+            my_json = c.decode('utf8').replace("'", '"')
+            data = json.loads(my_json)
+            route = data["routes"][0]
+            legs = route["legs"]
+            for leg in legs:
+                # Convert to km
+                distances.append(float(leg["distance"]) / 1000)
+                durations.append(float(leg['duration']))
+        return distances, durations
 
     def GetElevation(self, latitude, longitude):
         try:
@@ -123,9 +140,9 @@ class Osrm:
             my_json = c.decode('utf8').replace("'", '"')
             data = json.loads(my_json)
             results = data['results']
-            for result in results:
+            for result, location in zip(results, locations):
                 elevationData = result['elevation']
-                latitudeData = result['latitude']
-                longitudeData = result['longitude']
+                latitudeData = location['latitude']
+                longitudeData = location['longitude']
                 elevations.append(Coordinate(float(latitudeData), float(longitudeData), float(elevationData)))
         return elevations

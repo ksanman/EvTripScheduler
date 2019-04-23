@@ -1,19 +1,30 @@
 from vehicle import Vehicle
 from ...utility import RoundUp
+from trip_scheduler.trip_builder.vehicle.Energy_consumtion import Energyvalueitialization, Energy
 
 class NissanLeaf(Vehicle):
 
     KhwPerKm = 6.075
+    Mass = 1521
+    FrontalArea = 2.3316
+    DragCoefficient = 0.28
+    DrivelineEfficiency = 0.92
+    MotorEfficiency = 0.91
+    
 
     def __init__(self, batteryCapacity, timeBlockConstant):
+        #Energyvalueitialization(VehicleWeight=self.Mass, FrontArea=self.FrontalArea, DragCoefficient=self.DragCoefficient)
         super(NissanLeaf, self).__init__(batteryCapacity, timeBlockConstant)
 
     def Drive(self, roadSegment):
         """ 
             Returns the energy expended for driving the given road segment
         """
-
-        return roadSegment.Distance / self.KhwPerKm
+        speed = roadSegment.Speed / 1.609
+        energy = Energy(speed, roadSegment.Distance, roadSegment.Elevation)
+        energy2 = roadSegment.Distance / self.KhwPerKm
+        return energy
+        #return roadSegment.Distance / self.KhwPerKm
 
     def Charge(self, currentBatteryLevel, chargingConnection):
         """

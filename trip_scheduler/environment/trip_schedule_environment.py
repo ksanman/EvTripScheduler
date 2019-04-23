@@ -29,9 +29,12 @@ class EvTripScheduleEnvironment(Environment):
 
         nextStop = self.Route[nextStopIndex]
         nextTime = currentTime + nextStop.TimeFromPreviousStop 
-        nextBattery = currentBatteryLevel - nextStop.EnergyExpended
+        # Unlike charging, going downhill may fill the battery up. The car will simple stop charging but keep going.
+        nextBattery = min(currentBatteryLevel - nextStop.EnergyExpended, self.MaxBattery - 1)
 
-        if nextTime >= self.MaxTripTime or nextBattery < 0:
+        if nextTime >= self.MaxTripTime:
+            return None, -100
+        if nextBattery < 0:
             return None, -100
 
         reward = self.ComputeDrivingReward(nextStopIndex, nextTime, nextBattery)
@@ -58,10 +61,10 @@ class EvTripScheduleEnvironment(Environment):
     def ComputeDrivingReward(self, stopIndex, timeBlock, batteryLevel):
         reward = 0#self.ComputeTimeReward(stopIndex, timeBlock)
         if stopIndex ==  self.NumberOfStops - 1: # at the last stop
-            if not self.HasFinalCharger: # Last stop doesn't a charger
+            if not self.HasFinalCharger: # Last stop doesn't have a charger
                 reward += -100 if batteryLevel < (float(self.MaxBattery) * 0.50) else 0
         else: # All other stops
-            reward += -1 if batteryLevel > (float(self.MaxBattery) * 0.20) else -10
+            reward += 0 if batteryLevel > (float(self.MaxBattery) * 0.20) else -10
 
         return reward
 
@@ -69,7 +72,7 @@ class EvTripScheduleEnvironment(Environment):
         timeReward = 0#self.ComputeTimeReward(currentStopIndex, timeBlock)
         priceReward = 0#-(0.13*(batteryDelta))
         chargingReward =  -10 if batteryLevel > (float(self.MaxBattery) * 0.90) \
-                else 0 if batteryLevel > (float(self.MaxBattery) * 0.20)\
+                else 0 if batteryLevel > (float(self.MaxBattery) * 0.25)\
                 else 1
         return timeReward + chargingReward + priceReward
 
