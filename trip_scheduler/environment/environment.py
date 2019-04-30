@@ -41,7 +41,7 @@ class Environment():
         for batteryLevel in range(self.MaxBattery):
             for time in range(self.MaxTripTime):
                 reward = self.ComputeTimeReward(self.NumberOfStops - 1, time)
-                if batteryLevel == 0:
+                if batteryLevel <= 0:
                     reward -= 100
                 if time == self.MaxTripTime - 1:
                     reward -= 100

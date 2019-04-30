@@ -6,6 +6,18 @@ from ..trip_builder import Osrm
 
 class Schedule:
     def __init__(self, coordinates, chargingStops, finalStop, tripTime, finalBatteryLevel, isSuccesful, tripStats, timeBlockConstant, title):
+        """ The resulting schedule of the trip. 
+
+            Coordinates - coordinates that make up the route, from OSRM. 
+            ChargingStops - A list of stops and how long to stop there. 
+            TripTime - The total time the trip took. 
+            FinalBatteryLevel - The final battery level. 
+            IsSuccessful - If the trip was successful. 
+            TripStats - Stats about each time step, tells us what the model was doing. This is for visualization. 
+            Osrm = The osrm routing service. 
+            TimeBlockConstant - The time precision. 
+            Title - The title of the trip. 
+        """
         self.Coordinates = coordinates
         self.ChargingStops = chargingStops
         self.TripTime = tripTime

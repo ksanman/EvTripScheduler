@@ -1,9 +1,9 @@
 TODO list. 
 
-Add the energy modeling classes to the vehicle module. 
+Fix energy model to realistically predict the energy used. Right now it predicts too high prevent the vehicle from
+reaching different stops. 
 Add more car models. 
 Benchmark with Tesla Trip Planner
-Create a service to query the databases for on the server
 Place OSRM on the server. 
 Use OSRM frontend to show route and directions, with steps and charging steps.
 Process Multiple routes for analysis.

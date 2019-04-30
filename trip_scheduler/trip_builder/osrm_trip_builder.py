@@ -49,7 +49,7 @@ class OsrmTripBuilder(TripBuilder, object):
                 distanceFromPrevious, durationFromPrevious = self.Osrm.GetDistanceAndDurationBetweenPoints([route[stop-1].Location, intersection])
                 energyExpended = RoundUp(self.CalculateEnergyExpended(route[stop-1].Location, Coordinate(nearestPoint[0], nearestPoint[1], 0)))
                 #energyExpended = RoundUp(self.Vehicle.Drive(RoadSegment(distanceFromPrevious, durationFromPrevious, chargerLocation.Elevation)))
-                route.append(Stop(stop, str(charger.AddressInfo.Title) ,energyExpended, distanceFromPrevious[0], self.ConvertToTimeBlock(durationFromPrevious[0]), chargerConnection, chargerLocation))
+                route.append(Stop(stop + 1, str(charger.AddressInfo.Title) ,energyExpended, distanceFromPrevious[0], self.ConvertToTimeBlock(durationFromPrevious[0]), chargerConnection, chargerLocation))
 
         else:
             for stop in range(len(self.Chargers)-1):
@@ -65,7 +65,7 @@ class OsrmTripBuilder(TripBuilder, object):
                 distanceFromPrevious, durationFromPrevious = self.Osrm.GetDistanceAndDurationBetweenPoints([route[stop-1].Location, chargerLocation])
                 energyExpended = RoundUp(self.CalculateEnergyExpended(route[stop-1].Location, Coordinate(nearestPoint[0], nearestPoint[1], 0)))
                 #energyExpended = RoundUp(self.Vehicle.Drive(RoadSegment(distanceFromPrevious, durationFromPrevious, elevationChange)))
-                route.append(Stop(stop, str(charger.AddressInfo.Title), energyExpended, distanceFromPrevious[0],  self.ConvertToTimeBlock(durationFromPrevious[0]), chargerConnection, chargerLocation))
+                route.append(Stop(stop + 1, str(charger.AddressInfo.Title), energyExpended, distanceFromPrevious[0],  self.ConvertToTimeBlock(durationFromPrevious[0]), chargerConnection, chargerLocation))
 
             destinationLocation = self.EndPoint
             #elevationChange = self.GetElevationChange(route[-1].Location, Coordinate(float(destinationLocation[0]), float(destinationLocation[1]), 0))
@@ -73,7 +73,7 @@ class OsrmTripBuilder(TripBuilder, object):
             distanceFromPrevious, durationFromPrevious = self.Osrm.GetDistanceAndDurationBetweenPoints([route[-1].Location, destinationCoordinate])
             energyExpended = RoundUp(self.CalculateEnergyExpended(route[stop-1].Location, destinationCoordinate))
             # energyExpended = self.Vehicle.Drive(RoadSegment(distanceFromPrevious, durationFromPrevious, elevationChange))
-            route.append(Stop(self.NumberOfStops-1, "Destination", energyExpended, distanceFromPrevious[0],  self.ConvertToTimeBlock(durationFromPrevious[0]), location=destinationCoordinate))
+            route.append(Stop(self.NumberOfStops, "Destination", energyExpended, distanceFromPrevious[0],  self.ConvertToTimeBlock(durationFromPrevious[0]), location=destinationCoordinate))
 
         return Route(route, osrmRoute['Polyline'], osrmRoute["Elevations"])
 
@@ -111,8 +111,8 @@ class OsrmTripBuilder(TripBuilder, object):
                 acceleration = 0
 
             grade = elevationDelta / (distanceKms * 1000)
-            energy += self.EnergyModel.ComputerEnergyExpended(self.Vehicle, acceleration, speed, grade, durationSecs, distanceKms)
-            # energy += self.Vehicle.Drive(RoadSegment(distanceKms, durationSecs, elevationDelta))
+            #energy += self.EnergyModel.ComputerEnergyExpended(self.Vehicle, acceleration, speed, grade, durationSecs, distanceKms)
+            energy += self.Vehicle.Drive(RoadSegment(distanceKms, durationSecs, elevationDelta))
     
         return energy
 

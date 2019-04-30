@@ -28,7 +28,7 @@ class Visualize:
 
         minVal = min(drivingRewards.min(), chargingRewards.min())
         maxVal = max(drivingRewards.max() + 1, chargingRewards.max() + 1)
-        tickLabels = np.arange(minVal, maxVal + 1, 1)
+        tickLabels = np.arange(minVal, maxVal + 1, 1000)
         cmap = self.cmap_discretize('jet', tickLabels.size)
         # Make plot with vertical (default) colorbar
         for stop in range(self.NumberOfStops ):
@@ -41,10 +41,10 @@ class Visualize:
                 ax = axes[stop, action]
                 im = ax.imshow(rewards, vmin=minVal, vmax=maxVal, interpolation='nearest', cmap=cmap)
                 ax.set_title('Reward for {0} at stop {1}.'.format("Driving" if action == 0 else "Charging", stop), fontsize=8)
-                ax.set_yticks(np.arange(self.MaxTripTime))
-                ax.set_yticklabels(range(self.MaxTripTime))
-                ax.set_xticks(np.arange(self.MaxBattery))
-                ax.set_xticklabels(range(self.MaxBattery))
+                ax.set_yticks(np.arange(0, self.MaxTripTime, 10))
+                ax.set_yticklabels(range(0, self.MaxTripTime, 10))
+                ax.set_xticks(np.arange(0, self.MaxBattery, 20))
+                ax.set_xticklabels(range(0, self.MaxBattery,20))
                 
         
         fig.subplots_adjust(right=0.79, hspace=0.34)
@@ -95,7 +95,7 @@ class Visualize:
 
         minVal = values.min()
         maxVal = values.max()
-        tickLabels = np.arange(minVal, maxVal + 1, 1)
+        tickLabels = np.arange(minVal, maxVal + 1, 1000)
         cmap = self.cmap_discretize('jet', tickLabels.size)
 
         # Make plot with vertical (default) colorbar
@@ -141,10 +141,10 @@ class Visualize:
             ax = axes[stop]
             im = ax.imshow(value, vmin=minVal, vmax=maxVal, interpolation='nearest', cmap=cmap)
             ax.set_title('Policy at stop {0}.'.format(stop), fontsize=8)
-            ax.set_xticks(range(0,  self.MaxBattery, 1))
-            ax.set_xticklabels(range(0,  self.MaxBattery, 1))
-            ax.set_yticks(range(0, self.MaxTripTime, 1))
-            ax.set_yticklabels(range(0, self.MaxTripTime, 1))
+            ax.set_xticks(range(0,  self.MaxBattery, 10))
+            ax.set_xticklabels(range(0,  self.MaxBattery, 10))
+            ax.set_yticks(range(0, self.MaxTripTime, 50))
+            ax.set_yticklabels(range(0, self.MaxTripTime, 50))
         
         fig.subplots_adjust(right=0.79, hspace=0.34)
         

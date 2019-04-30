@@ -26,7 +26,7 @@ class ChargerContext:
 
     def GetChargersFromJson(self, jsonData):
         """
-        Gets the charger objects from the US charger request json file saved locally. 
+        Gets the charger objects from the a charger request json file saved locally. 
         """
         chargers = []
         for data in jsonData:
@@ -639,7 +639,7 @@ class ChargerContext:
     def IsInChargers(self, id, chargers):
         for charger in chargers:
             if charger.ID == id:
-                return True, chargers.index(charger)
+                return True, chargers.index(charger) 
         return False, -1
 
     def CanParseInt(self, value):

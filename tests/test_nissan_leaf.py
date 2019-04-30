@@ -2,8 +2,10 @@ import unittest
 from context import NissanLeaf
 
 class Test_NissanLeaf(unittest.TestCase):
+    """ These tests are not complete since adding the energy model in. 
+    """
     def setUp(self):
-        self.Car = NissanLeaf(30)
+        self.Car = NissanLeaf(30, 15)
 
     def test_charge(self):
         batteryLevel = 0

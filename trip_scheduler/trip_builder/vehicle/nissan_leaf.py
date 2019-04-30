@@ -13,7 +13,7 @@ class NissanLeaf(Vehicle):
     
 
     def __init__(self, batteryCapacity, timeBlockConstant):
-        #Energyvalueitialization(VehicleWeight=self.Mass, FrontArea=self.FrontalArea, DragCoefficient=self.DragCoefficient)
+        Energyvalueitialization(VehicleWeight=self.Mass, FrontArea=self.FrontalArea, DragCoefficient=self.DragCoefficient)
         super(NissanLeaf, self).__init__(batteryCapacity, timeBlockConstant)
 
     def Drive(self, roadSegment):
@@ -22,7 +22,7 @@ class NissanLeaf(Vehicle):
         """
         speed = roadSegment.Speed / 1.609
         energy = Energy(speed, roadSegment.Distance, roadSegment.Elevation)
-        energy2 = roadSegment.Distance / self.KhwPerKm
+        #energy2 = roadSegment.Distance / self.KhwPerKm
         return energy
         #return roadSegment.Distance / self.KhwPerKm
 

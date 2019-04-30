@@ -1,12 +1,14 @@
 from context import OsrmTripBuilder, Optimizer, EvTripScheduleEnvironment, Optimizer, Visualize
 from time import time
 
-title = 'Logan to St George'
+#title = 'Logan to St George'
+title = 'Logan to Salt Lake'
 startPoint=['41.740256','-111.841764']
-endPoint=['37.095169','-113.575974'] #st george
+#endPoint=['37.095169','-113.575974'] #st george
 #endPoint = ['38.573315', '-109.549843'] #moab
+endPoint = [40.758701, -111.876183]
 expectedTime = 120
-batteryCapacity = 40
+batteryCapacity = 24
 hasCharge = True
 vehicle = 'NissanLeaf'
 timeBlockConstant = 5

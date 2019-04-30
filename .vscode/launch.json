@@ -9,14 +9,14 @@
             "type": "python",
             "request": "launch",
             "program": "${file}",
-            "console": "none"
+            "console": "internalConsole"
         },
         {
-            "name": "Python: Module",
+            "name": "Python: Osrm",
             "type": "python",
             "request": "launch",
-            "module": "enter-your-module-name-here",
-            "console": "integratedTerminal"
+            "program": "C:/Users/agent/Documents/ev trip planner/code/iteration4/integration_tests/osrm_trip_scheduler_integration.py",
+            "console": "internalConsole"
         },
         {
             "name": "Python: Current File (External Terminal)",
