@@ -623,7 +623,7 @@ class ChargerContext:
         if chargerData:
             return self.GetChargerObjects(chargerData)
         else:
-            raise Exception('Failed to get charger from database.')
+            return []
 
     def GetChargerObjects(self, chargerData):
         chargers = []

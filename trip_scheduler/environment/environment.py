@@ -83,6 +83,10 @@ class Environment():
     def GetStopName(self, index):
         pass
 
+    @abc.abstractmethod
+    def ComputeTimeReward(self, stop, time):
+        pass
+
     def Reset(self):
         self.State = State(0, 0, self.MaxBattery-1)
         return self.State

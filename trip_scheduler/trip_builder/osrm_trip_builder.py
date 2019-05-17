@@ -33,46 +33,37 @@ class OsrmTripBuilder(TripBuilder, object):
         osrmRoute = self.OsrmRoute
         startLocation = self.StartPoint
         nearestPoint = self.GetNearestPoint(Coordinate(float(startLocation[0]), float(startLocation[1]), 0))
-        route = [Stop(0, "Start", 0, 0, 0, ChargerConnection(0,0), Coordinate(float(nearestPoint[0]), float(nearestPoint[1]), self.Osrm.GetElevation(startLocation[0], startLocation[1])))]
+        route = [Stop(0, "Start", 0, 0, 0, ChargerConnection(0,0), Coordinate(float(nearestPoint[0]), float(nearestPoint[1]), self.Osrm.GetElevation(startLocation[0], startLocation[1])), Coordinate(nearestPoint[0], nearestPoint[1], 0))]
 
         if self.HasDestinationCharger:
+            stop = 0
             for stop in range(len(self.Chargers)):
                 charger = self.Chargers[stop]
                 nearestPoint = self.GetNearestPoint(Coordinate(charger.IntersectionLatitude, charger.IntersectionLongitude, 0))
-                #elevationChange = self.GetElevationChange(route[-1].Location, Coordinate(nearestPoint[0], nearestPoint[1], 0))
-                #chargerLocation = Coordinate(charger.AddressInfo.Latitude, charger.AddressInfo.Longitude, elevationChange)
-                #intersection = Coordinate(charger.IntersectionLatitude, charger.IntersectionLongitude, elevationChange)
                 chargerLocation = Coordinate(charger.AddressInfo.Latitude, charger.AddressInfo.Longitude, 0)
                 intersection = Coordinate(charger.IntersectionLatitude, charger.IntersectionLongitude, 0)
                 cost = charger.UsageCost if charger.UsageCost is not None else 0
                 chargerConnection = ChargerConnection(cost, charger.Connections[0].PowerKw, charger.Connections[0].Amps, charger.Connections[0].Voltage)
                 distanceFromPrevious, durationFromPrevious = self.Osrm.GetDistanceAndDurationBetweenPoints([route[stop-1].Location, intersection])
-                energyExpended = RoundUp(self.CalculateEnergyExpended(route[stop-1].Location, Coordinate(nearestPoint[0], nearestPoint[1], 0)))
-                #energyExpended = RoundUp(self.Vehicle.Drive(RoadSegment(distanceFromPrevious, durationFromPrevious, chargerLocation.Elevation)))
-                route.append(Stop(stop + 1, str(charger.AddressInfo.Title) ,energyExpended, distanceFromPrevious[0], self.ConvertToTimeBlock(durationFromPrevious[0]), chargerConnection, chargerLocation))
+                energyExpended = RoundUp(self.CalculateEnergyExpended(route[stop-1].Intersection, Coordinate(nearestPoint[0], nearestPoint[1], 0)))    
+                route.append(Stop(stop + 1, str(charger.AddressInfo.Title) ,energyExpended, distanceFromPrevious[0], self.ConvertToTimeBlock(durationFromPrevious[0]), chargerConnection, chargerLocation, intersection))
 
         else:
-            for stop in range(len(self.Chargers)-1):
+            for stop in range(len(self.Chargers)):
                 charger = self.Chargers[stop]
                 nearestPoint = self.GetNearestPoint(Coordinate(charger.IntersectionLatitude, charger.IntersectionLongitude, 0))
-                #elevationChange = self.GetElevationChange(route[-1].Location, Coordinate(nearestPoint[0], nearestPoint[1], 0))
-                #chargerLocation = Coordinate(charger.AddressInfo.Latitude, charger.AddressInfo.Longitude, elevationChange)
-                #intersection = Coordinate(charger.IntersectionLatitude, charger.IntersectionLongitude, elevationChange)
                 chargerLocation = Coordinate(charger.AddressInfo.Latitude, charger.AddressInfo.Longitude, 0)
                 intersection = Coordinate(charger.IntersectionLatitude, charger.IntersectionLongitude, 0)
                 cost = charger.UsageCost if charger.UsageCost is not None else 0
                 chargerConnection = ChargerConnection(cost, charger.Connections[0].PowerKw, charger.Connections[0].Amps, charger.Connections[0].Voltage)
                 distanceFromPrevious, durationFromPrevious = self.Osrm.GetDistanceAndDurationBetweenPoints([route[stop-1].Location, chargerLocation])
-                energyExpended = RoundUp(self.CalculateEnergyExpended(route[stop-1].Location, Coordinate(nearestPoint[0], nearestPoint[1], 0)))
-                #energyExpended = RoundUp(self.Vehicle.Drive(RoadSegment(distanceFromPrevious, durationFromPrevious, elevationChange)))
-                route.append(Stop(stop + 1, str(charger.AddressInfo.Title), energyExpended, distanceFromPrevious[0],  self.ConvertToTimeBlock(durationFromPrevious[0]), chargerConnection, chargerLocation))
+                energyExpended = RoundUp(self.CalculateEnergyExpended(route[stop-1].Intersection, Coordinate(nearestPoint[0], nearestPoint[1], 0)))
+                route.append(Stop(stop + 1, str(charger.AddressInfo.Title), energyExpended, distanceFromPrevious[0],  self.ConvertToTimeBlock(durationFromPrevious[0]), chargerConnection, chargerLocation, intersection))
 
             destinationLocation = self.EndPoint
-            #elevationChange = self.GetElevationChange(route[-1].Location, Coordinate(float(destinationLocation[0]), float(destinationLocation[1]), 0))
             destinationCoordinate = Coordinate(float(destinationLocation[0]), float(destinationLocation[1]), 0)
             distanceFromPrevious, durationFromPrevious = self.Osrm.GetDistanceAndDurationBetweenPoints([route[-1].Location, destinationCoordinate])
-            energyExpended = RoundUp(self.CalculateEnergyExpended(route[stop-1].Location, destinationCoordinate))
-            # energyExpended = self.Vehicle.Drive(RoadSegment(distanceFromPrevious, durationFromPrevious, elevationChange))
+            energyExpended = RoundUp(self.CalculateEnergyExpended(route[len(self.Chargers)].Intersection, destinationCoordinate))
             route.append(Stop(self.NumberOfStops, "Destination", energyExpended, distanceFromPrevious[0],  self.ConvertToTimeBlock(durationFromPrevious[0]), location=destinationCoordinate))
 
         return Route(route, osrmRoute['Polyline'], osrmRoute["Elevations"])

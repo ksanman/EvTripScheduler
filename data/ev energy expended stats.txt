@@ -1,0 +1,6 @@
+Route                   |      Coordinates | A Better Route Planner|Energy Model - Shaju|Energy Model - Kody
+Logan to Top of Sardine |(41.7457,-111.83395), (41.561,-111.95137)| 8.4 KWH | 9 KWH | 8 KWH
+Logan to Brigham        |(41.7457,-111.83395),('41.52246','-112.01591')| 8.88 KWH | 2 KWH | 9 KWH
+Logan to Beaver Mountain|(41.7457,-111.83395),('41.97838','-111.54076')| 12.72 KWH| 10 KWH | 9 KWH
+Logan to Bear Lake      |(41.7457,-111.83395),('41.95745','-111.39175')| 13.68 KWH| 7 KWH  | 11 KWH
+Logan to Roy            |(41.7457,-111.83395)('41.21069','-112.01111')| 19.2 KWH | 42 KWH | 40 KWH |
